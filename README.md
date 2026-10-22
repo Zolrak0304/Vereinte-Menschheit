@@ -58,3 +58,14 @@ ERSTER SCHRITT: Baue eine einfache Webseite die 7er Teams organisiert
 
 ## LIZENZ
 MIT License - Jeder darf es nutzen, verändern, bauen. NEXUS gehört allen.
+---
+## GENESIS - JAHR 0 - ERSTES TEAM
+
+**Datum:** 22.10.2026 - 03:18 Uhr
+**Team:** Vereinte-Menschheit-Kern (1/7)
+**Mitglied #1:** Zolrak - Gründer
+
+Status: NEXUS V1.1 LIVE - https://zolrak0304.github.io/Vereinte-Menschheit/
+Protokoll: V7.2 FINAL VERIFIED
+
+Dies ist der erste Herzschlag. Hier hat alles begonnen.
