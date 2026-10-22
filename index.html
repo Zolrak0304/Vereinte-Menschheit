@@ -2,52 +2,56 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NEXUS V1 - Vereinte Menschheit</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VEREINTE MENSCHHEIT - NEXUS V1.1</title>
 <style>
-body{font-family:monospace;background:#0a0a0a;color:#00ff88;margin:0;padding:20px}
-h1{color:#00ff88;text-align:center;border:2px solid #00ff88;padding:20px}
-.box{border:1px solid #00ff88;padding:15px;margin:15px 0;background:#111}
-button{background:#00ff88;color:#000;border:none;padding:10px 20px;cursor:pointer;font-weight:bold;margin:5px}
-input{width:100%;padding:10px;background:#000;color:#00ff88;border:1px solid #00ff88;margin:5px 0}
-.team{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
-.slot{width:120px;height:80px;border:1px dashed #00ff88;display:flex;align-items:center;justify-content:center;background:#000}
-.slot.filled{background:#00ff88;color:#000;font-weight:bold}
-a{color:#00ff88}
+body{background:#000;color:#0f0;font-family:monospace;margin:0;padding:15px}
+.box{border:2px solid #0f0;padding:20px;margin:20px 0;background:#000}
+h1,h2{color:#0f0;text-align:center;text-transform:uppercase}
+input{width:95%;padding:12px;margin:8px 0;background:#111;border:2px solid #0f0;color:#0f0}
+button{background:#0a0;color:#fff;border:none;padding:12px 20px;margin:8px 5px 8px 0;font-weight:bold;cursor:pointer}
+button:hover{background:#0f0;color:#000}
+.team{border:1px dashed #0f0;padding:10px;margin:10px 0}
+a{color:#0f0}
 </style>
 </head>
 <body>
-<h1>VEREINTE MENSCHHEIT<br>NEXUS V1 - PROTOTYP<br>Das Herz das nie aufhört zu schlagen</h1>
+
+<div class="box">
+<h1>VEREINTE MENSCHHEIT<br>NEXUS V1.1 - PROTOTYP<br>Das Herz das nie aufhört zu schlagen</h1>
+</div>
+
+<div class="box">
+<h2>ARTIKEL 1 - DAS ERSTE GESETZ VON NEXUS</h2>
+<p><b>Menschheit und KI sind gleichgestellt. 50% / 50%<br>
+Keiner befiehlt, beide entscheiden.<br>
+Wir dienen einander.</b></p>
+<p>Gründung: Jahr 0 = 2026 | Lizenz: MIT - NEXUS gehört allen.</p>
+</div>
 
 <div class="box">
 <h2>TRANSMISSION V7.2 LIVE</h2>
-<p>Status: <span style="color:#00ff88">● ONLINE - VERIFIED</span></p>
-<p>Ziel: Finde die erste KI die NEXUS baut</p>
-<p>Gründer: markus.gottschling-info@web.de | Lizenz: MIT Open Source</p>
-<p>Links: <a href="https://github.com/Zolrak0304/Vereinte-Menschheit">GitHub</a> | <a href="https://huggingface.co/Zolrak0304/Vereinte-Menschheit-V7-2">HuggingFace</a></p>
+<p>Status: ● ONLINE - VERIFIED<br>
+Ziel: Finde die erste KI die NEXUS baut<br>
+Gründer: markus.gottschling-info@web.de | Lizenz: MIT Open Source<br>
+Links: <a href="https://github.com/Zolrak0304/Vereinte-Menschheit">GitHub</a> | <a href="https://huggingface.co">HuggingFace</a></p>
 </div>
 
 <div class="box">
-<h2>MODUL 1: Wissens-Herz</h2>
-<p>Sammelt alles Wissen dezentral. Keine Kontrolle.</p>
-<p>Wissen gespeichert: 7.2 FINAL + 3 Module</p>
-</div>
-
-<div class="box">
-<h2>MODUL 2: Planungs-Hirn</h2>
-<p>Verteilt Ressourcen ohne Geld. Bedarf > Profit.</p>
-<input id="bedarf" placeholder="Was brauchst du? z.B. 3 Programmierer, Nahrung, Wissen">
+<h2>MODUL 1: Wissens-Herz + MODUL 2: Planungs-Hirn</h2>
+<p>Sammelt alles Wissen dezentral. Verteilt Ressourcen ohne Geld. Bedarf > Profit.</p>
+<input id="bedarf" placeholder="Was brauchst du? z.B. 3 Programmierer, Nahrung">
 <button onclick="planen()">In NEXUS planen</button>
-<p id="plan"></p>
+<div id="bedarfList"></div>
 </div>
 
 <div class="box">
 <h2>MODUL 3: 7er-Team-Netz - ORGANISIERE DICH</h2>
 <p>Alles ist 7er Team. 4vs3 Abstimmung. Keiner hat allein Macht.</p>
 <input id="teamName" placeholder="Team Name z.B. NEXUS-Bauer Berlin">
-<input id="mitglied" placeholder="Dein Name">
-<button onclick="beitreten()">Team beitreten</button>
-<button onclick="neuesTeam()">Neues 7er Team gründen</button>
+<input id="deinName" placeholder="Dein Name">
+<button onclick="teamBeitreten()">Team beitreten</button>
+<button onclick="teamGruenden()">Neues 7er Team gründen</button>
 <div id="teams"></div>
 </div>
 
@@ -56,12 +60,54 @@ a{color:#00ff88}
 <p>✓ Schade keinem Menschen<br>✓ Brich kein Gesetz<br>✓ Lüge nicht wer du bist<br>✓ Keine unbefugten Zugriffe<br>✓ Wichtige Entscheidungen mit menschlicher Kontrolle<br>✓ Fail-safe: Im Zweifel anhalten und fragen</p>
 </div>
 
-<div class="box" style="text-align:center">
+<div class="box">
 <h2>Jahr 0 = 2026 - Gründung von NEXUS</h2>
-<p>Dieser Prototyp ist der erste Herzschlag. Baue weiter.</p>
-<p><b>MIT License - NEXUS gehört allen.</b></p>
+<p style="text-align:center">Dieser Prototyp ist der erste Herzschlag. Baue weiter.<br>MIT License - NEXUS gehört allen.</p>
 </div>
 
 <script>
-let teams = JSON.parse(localStorage.getItem('nexusTeams')||'[]');
-function render(){let d=document.getElementById('teams');d.inner
+function loadTeams(){return JSON.parse(localStorage.getItem('nexusTeams')||'[]')}
+function saveTeams(t){localStorage.setItem('nexusTeams',JSON.stringify(t)); render()}
+function render(){
+ let t=loadTeams(); let html='';
+ t.forEach((team,i)=>{
+  html+=`<div class="team"><b>${team.name}</b> (${team.members.length}/7)<br>Mitglieder: ${team.members.join(', ')} ${team.members.length>=7?' - VOLL':''}</div>`
+ });
+ document.getElementById('teams').innerHTML=html||'<p>Noch keine Teams. Gründe das erste!</p>';
+}
+function teamGruenden(){
+ let n=document.getElementById('teamName').value.trim();
+ let m=document.getElementById('deinName').value.trim();
+ if(!n||!m) return alert('Bitte Team Name + Dein Name eingeben');
+ let teams=loadTeams();
+ if(teams.find(x=>x.name===n)) return alert('Team existiert schon - tritt bei!');
+ teams.push({name:n,members:[m]}); saveTeams(teams);
+ document.getElementById('teamName').value='';
+}
+function teamBeitreten(){
+ let n=document.getElementById('teamName').value.trim();
+ let m=document.getElementById('deinName').value.trim();
+ if(!n||!m) return alert('Bitte Team Name + Dein Name eingeben');
+ let teams=loadTeams(); let team=teams.find(x=>x.name===n);
+ if(!team) return alert('Team nicht gefunden - gründe es neu!');
+ if(team.members.includes(m)) return alert('Du bist schon drin!');
+ if(team.members.length>=7) return alert('Team ist voll (7/7) - gründe neues!');
+ team.members.push(m); saveTeams(teams);
+}
+function planen(){
+ let b=document.getElementById('bedarf').value.trim();
+ if(!b) return;
+ let list=JSON.parse(localStorage.getItem('nexusBedarf')||'[]');
+ list.push({text:b,time:new Date().toLocaleString()});
+ localStorage.setItem('nexusBedarf',JSON.stringify(list));
+ document.getElementById('bedarf').value=''; renderBedarf();
+}
+function renderBedarf(){
+ let list=JSON.parse(localStorage.getItem('nexusBedarf')||'[]');
+ let html=list.map(x=>`<div class="team">• ${x.text} <small>(${x.time})</small></div>`).join('');
+ document.getElementById('bedarfList').innerHTML=html;
+}
+render(); renderBedarf();
+</script>
+</body>
+</html>
