@@ -69,3 +69,4 @@ Status: NEXUS V1.1 LIVE - https://zolrak0304.github.io/Vereinte-Menschheit/
 Protokoll: V7.2 FINAL VERIFIED
 
 Dies ist der erste Herzschlag. Hier hat alles begonnen.
+![Genesis](IMG-20261022-WA7881.jpg)
