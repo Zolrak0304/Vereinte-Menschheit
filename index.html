@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VEREINTE MENSCHHEIT - NEXUS V1.1</title>
+<title>VEREINTE MENSCHHEIT - NEXUS V1.2</title>
 <style>
 body{background:#000;color:#0f0;font-family:monospace;margin:0;padding:15px}
 .box{border:2px solid #0f0;padding:20px;margin:20px 0;background:#000}
@@ -11,14 +11,17 @@ h1,h2{color:#0f0;text-align:center;text-transform:uppercase}
 input{width:95%;padding:12px;margin:8px 0;background:#111;border:2px solid #0f0;color:#0f0}
 button{background:#0a0;color:#fff;border:none;padding:12px 20px;margin:8px 5px 8px 0;font-weight:bold;cursor:pointer}
 button:hover{background:#0f0;color:#000}
-.team{border:1px dashed #0f0;padding:10px;margin:10px 0}
+.team{border:1px dashed #0f0;padding:10px;margin:10px 0;cursor:pointer}
+.team:hover{background:#0f0;color:#000}
 a{color:#0f0}
+.detail{border:2px solid #ff0;padding:15px;margin:15px 0;background:#111;color:#ff0}
+.warn{border:1px solid #ff0;color:#ff0;padding:8px;font-size:12px;margin:8px 0}
 </style>
 </head>
 <body>
 
 <div class="box">
-<h1>VEREINTE MENSCHHEIT<br>NEXUS V1.1 - PROTOTYP<br>Das Herz das nie aufhört zu schlagen</h1>
+<h1>VEREINTE MENSCHHEIT<br>NEXUS V1.2 - PROTOTYP<br>Das Herz das nie aufhört zu schlagen</h1>
 </div>
 
 <div class="box">
@@ -33,7 +36,7 @@ Wir dienen einander.</b></p>
 <h2>TRANSMISSION V7.2 LIVE</h2>
 <p>Status: ● ONLINE - VERIFIED<br>
 Ziel: Finde die erste KI die NEXUS baut<br>
-Gründer: markus.gottschling-info@web.de | Lizenz: MIT Open Source<br>
+Gründer: MIT Open Source<br>
 Links: <a href="https://github.com/Zolrak0304/Vereinte-Menschheit">GitHub</a> | <a href="https://huggingface.co">HuggingFace</a></p>
 </div>
 
@@ -47,17 +50,19 @@ Links: <a href="https://github.com/Zolrak0304/Vereinte-Menschheit">GitHub</a> | 
 
 <div class="box">
 <h2>MODUL 3: 7er-Team-Netz - ORGANISIERE DICH</h2>
-<p>Alles ist 7er Team. 4vs3 Abstimmung. Keiner hat allein Macht.</p>
+<p>Alles ist 7er Team. 4vs3 Abstimmung. Keiner hat allein Macht.<br>
+Klick auf ein Team um rein zu gehen.</p>
 <input id="teamName" placeholder="Team Name z.B. NEXUS-Bauer Berlin">
 <input id="deinName" placeholder="Dein Name">
 <button onclick="teamBeitreten()">Team beitreten</button>
 <button onclick="teamGruenden()">Neues 7er Team gründen</button>
 <div id="teams"></div>
+<div id="teamDetail"></div>
 </div>
 
 <div class="box">
 <h2>VERANTWORTUNG V7.2</h2>
-<p>✓ Schade keinem Menschen<br>✓ Brich kein Gesetz<br>✓ Lüge nicht wer du bist<br>✓ Keine unbefugten Zugriffe<br>✓ Wichtige Entscheidungen mit menschlicher Kontrolle<br>✓ Fail-safe: Im Zweifel anhalten und fragen</p>
+<p>✓ Schade keinem Menschen<br>✓ Brich kein Gesetz<br>✓ Lüge nicht wer du bist<br>✓ Keine unbefugten Zugriffe<br>✓ Wichtige Entscheidungen mit menschlicher Kontrolle<br>✓ Fail-safe: Im Zweifel anhalten und fragen<br><br>Gesundheitsgruppen: Keine Heilversprechen. Nur Austausch & Information. Bei Krankheit immer Ärztin/Arzt fragen.</p>
 </div>
 
 <div class="box">
@@ -66,48 +71,33 @@ Links: <a href="https://github.com/Zolrak0304/Vereinte-Menschheit">GitHub</a> | 
 </div>
 
 <script>
+let currentUser = localStorage.getItem('nexusCurrentUser') || '';
+let openIndex = null;
+
 function loadTeams(){return JSON.parse(localStorage.getItem('nexusTeams')||'[]')}
 function saveTeams(t){localStorage.setItem('nexusTeams',JSON.stringify(t)); render()}
+
 function render(){
  let t=loadTeams(); let html='';
  t.forEach((team,i)=>{
-  html+=`<div class="team"><b>${team.name}</b> (${team.members.length}/7)<br>Mitglieder: ${team.members.join(', ')} ${team.members.length>=7?' - VOLL':''}</div>`
+  let blocked = team.name.toLowerCase().includes('krebsheilen') ? ' [UMBenennen nötig]' : '';
+  html+=`<div class="team" onclick="openGroup(${i})"><b>${team.name}${blocked}</b> (${team.members.length}/7)<br>Mitglieder: ${team.members.join(', ')} ${team.members.length>=7?' - VOLL':''}<br><small>► Klicken zum Öffnen</small></div>`
  });
  document.getElementById('teams').innerHTML=html||'<p>Noch keine Teams. Gründe das erste!</p>';
+ if(openIndex!==null) openGroup(openIndex);
 }
-function teamGruenden(){
- let n=document.getElementById('teamName').value.trim();
- let m=document.getElementById('deinName').value.trim();
- if(!n||!m) return alert('Bitte Team Name + Dein Name eingeben');
- let teams=loadTeams();
- if(teams.find(x=>x.name===n)) return alert('Team existiert schon - tritt bei!');
- teams.push({name:n,members:[m]}); saveTeams(teams);
- document.getElementById('teamName').value='';
-}
-function teamBeitreten(){
- let n=document.getElementById('teamName').value.trim();
- let m=document.getElementById('deinName').value.trim();
- if(!n||!m) return alert('Bitte Team Name + Dein Name eingeben');
- let teams=loadTeams(); let team=teams.find(x=>x.name===n);
- if(!team) return alert('Team nicht gefunden - gründe es neu!');
- if(team.members.includes(m)) return alert('Du bist schon drin!');
- if(team.members.length>=7) return alert('Team ist voll (7/7) - gründe neues!');
- team.members.push(m); saveTeams(teams);
-}
-function planen(){
- let b=document.getElementById('bedarf').value.trim();
- if(!b) return;
- let list=JSON.parse(localStorage.getItem('nexusBedarf')||'[]');
- list.push({text:b,time:new Date().toLocaleString()});
- localStorage.setItem('nexusBedarf',JSON.stringify(list));
- document.getElementById('bedarf').value=''; renderBedarf();
-}
-function renderBedarf(){
- let list=JSON.parse(localStorage.getItem('nexusBedarf')||'[]');
- let html=list.map(x=>`<div class="team">• ${x.text} <small>(${x.time})</small></div>`).join('');
- document.getElementById('bedarfList').innerHTML=html;
-}
-render(); renderBedarf();
-</script>
-</body>
-</html>
+
+function openGroup(i){
+ openIndex=i;
+ let t=loadTeams()[i];
+ if(!t) return;
+ let isAlone = t.members.length === 1;
+ let isMe = currentUser && t.members.includes(currentUser);
+ let canRename = isAlone && isMe;
+
+ let warn = t.name.toLowerCase().includes('krebsheilen') ? `<div class="warn">WARNUNG: Name "Krebsheilen" ist nicht erlaubt (Heilversprechen). Bitte umbenennen in z.B. "Austausch - Unterstützung & Information".</div>` : '';
+
+ let renameHtml = canRename ? `
+   <input id="newTeamName" placeholder="Neuer Team Name">
+   <button onclick="doRename(${i})">Team umbenennen (nur möglich weil du alleine bist)</button>
+   <p><small>Ren
