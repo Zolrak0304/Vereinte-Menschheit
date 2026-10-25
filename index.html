@@ -3,24 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VEREINTE MENSCHHEIT - NEXUS V1.3.1</title>
-<style>
-body{background:#000;color:#0f0;font-family:monospace;margin:0;padding:15px}
-.box{border:2px solid #0f0;padding:20px;margin:20px 0;background:#000}
-h1,h2{color:#0f0;text-align:center;text-transform:uppercase}
-input{width:95%;padding:12px;margin:8px 0;background:#111;border:2px solid #0f0;color:#0f0}
-button{background:#0a0;color:#fff;border:none;padding:12px 20px;margin:8px 5px 8px 0;font-weight:bold;cursor:pointer}
-button:hover{background:#0f0;color:#000}
-.team{border:1px dashed #0f0;padding:10px;margin:10px 0;cursor:pointer}
-.team:hover{background:#222}
-.team-founder{border:2px solid #ff0}
-a{color:#0f0}
-.detail{border:2px solid #ff0;padding:15px;margin:15px 0;background:#111;color:#ff0}
-.small{font-size:11px;color:#8f8}
-</style>
+<title>NEXUS V1.3.2</title>
+<style>body{background:#000;color:#0f0;font-family:monospace;padding:10px} .box{border:2px solid #0f0;padding:15px;margin:15px 0} input,button{width:95%;padding:10px;margin:5px;background:#111;color:#0f0;border:1px solid #0f0} button{background:#0a0;color:#fff;font-weight:bold} .team{border:1px dashed #0f0;padding:8px;margin:8px 0}</style>
 </head>
 <body>
-
-<div class="box">
-<h1>VEREINTE MENSCHHEIT<br>NEXUS V1.3.1 - PROTOTYP<br>Das Herz das nie aufhört zu schlagen</h1>
-<p style="text-align:center" class="small">V1.3.1 FIX - Teams bleiben erhalten - Sof
+<div class="box"><h1>VEREINTE MENSCHHEIT NEXUS V1.3.2</h1><p>V1.3.2 FIX - Teams bleiben</p></div>
+<div class="box"><h2>7er Team Netz</h2><input id="teamName" placeholder="Team Name"><input id="deinName" placeholder="Dein Name"><br><button onclick="teamGruenden()">Neues Team gründen</button><button onclick="teamBeitreten()">Beitreten</button><div id="teams"></div><div id="teamDetail"></div></div>
+<script>
+let aktuellerNutzer=localStorage.getItem('nexusCurrentUser')||'';
+let offenerIndex=null;
+function lade(){try{return JSON.parse(localStorage.getItem('nexusTeams')||'[]')}catch(e){return[]}}
+function speichere(t){localStorage.setItem('nexusTeams',JSON.stringify(t));zeige()}
+function zeige(){let t=lade();let h='';t.forEach((team,i)=>{h+=`<div class=team onclick=oeffne(${i})><b>${team.name}</b> (${team.members.length}/7) ${team.members.join(', ')}</div>`});document.getElementById('teams').innerHTML=h||'Noch keine Teams';if(offenerIndex!==null)oeffne(offenerIndex)}
+function oeffne(i){offenerIndex=i;let t=lade()[i];document.getElementById('teamDetail').innerHTML=`<div class=box><h3>${t.name}</h3><p>${t.members.join('<br>')}</p><input id=newName placeholder=Neuer Name><button onclick=umbenennen(${i})>Umbenennen</button><button onclick=schliessen()>Schließen</button><button onclick=verlassen(${i})>Verlassen</button></div>`}
+function schliessen(){offenerIndex=null;document.getElementById('teamDetail').innerHTML=''}
+function umbenennen(i){let n=document.getElementById('newName').value.trim();if(n.length<3)return alert('Zu kurz');let t=lade();if(t[i].members.length!=1)return alert('Nur bei 1 Mitglied');t[i].name=n;speichere(t)}
+function teamGruenden(){let n=document.getElementById('teamName').value.trim();let m=document.getElementById('deinName').value.trim();if(!n||!m)return alert('Beides eingeben');let t=lade();if(t.find(x=>x.name===n))return alert('Existiert');t.push({name:n,members:[m]});aktuellerNutzer=m;localStorage.setItem('nexusCurrentUser',m);speichere(t);alert('Gegründet: '+n)}
+function teamBeitreten(){let n=document.getElementById('teamName').value.trim();let m=document.getElementById('deinName').value.trim();if(!n||!m)return alert('Beides');let t=lade();let team=t.find(x=>x.name===n);if(!team)return alert('Nicht gefunden');if(team.members.includes(m))return alert('Schon drin');if(team.members.length>=7)return alert('Voll');team.members.push(m);aktuellerNutzer=m;localStorage.setItem('nexusCurrentUser',m);speichere(t)}
+function verlassen(i){let t=lade();t[i].members=t[i].members.filter(x=>x!==aktuellerNutzer);if(t[i].members.length===0)t.splice(i,1);speichere(t);schliessen()}
+zeige();
+</script>
+</body>
+</html>
