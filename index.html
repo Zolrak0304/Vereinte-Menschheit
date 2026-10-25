@@ -3,25 +3,65 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NEXUS V1.3.2</title>
-<style>body{background:#000;color:#0f0;font-family:monospace;padding:10px} .box{border:2px solid #0f0;padding:15px;margin:15px 0} input,button{width:95%;padding:10px;margin:5px;background:#111;color:#0f0;border:1px solid #0f0} button{background:#0a0;color:#fff;font-weight:bold} .team{border:1px dashed #0f0;padding:8px;margin:8px 0}</style>
+<title>VEREINTE MENSCHHEIT - NEXUS V1.4 GENESIS</title>
+<style>
+*{box-sizing:border-box}
+body{background:#000;color:#0f0;font-family:monospace;margin:0;padding:10px}
+.box{border:2px solid #0f0;padding:18px;margin:16px 0;background:#000}
+h1,h2{color:#0f0;text-align:center;text-transform:uppercase;line-height:1.2}
+h1{font-size:22px} h2{font-size:18px;border-bottom:1px solid #0f0;padding-bottom:8px}
+input{width:100%;padding:14px;margin:8px 0;background:#0a0a0a;border:2px solid #0f0;color:#0f0;font-size:16px}
+button{background:#0a0;color:#fff;border:none;padding:14px 18px;margin:8px 4px;font-weight:bold;cursor:pointer;font-size:14px}
+button:hover{background:#0f0;color:#000}
+button:disabled{background:#333;color:#666}
+.team{border:1px dashed #0f0;padding:12px;margin:10px 0;cursor:pointer;background:#050505}
+.team:hover{background:#111}
+.team-founder{border:2px solid #ff0;background:#111100}
+.login-box{border:2px solid #0ff;padding:15px;background:#001111;text-align:center}
+.detail{border:2px solid #ff0;padding:15px;margin:15px 0;background:#111;color:#ff0}
+.small{font-size:11px;color:#8f8}
+.regel{border-left:3px solid #0f0;padding-left:10px;margin:8px 0}
+.warn{color:#ff0} .block{color:#f55}
+a{color:#0ff}
+</style>
 </head>
 <body>
-<div class="box"><h1>VEREINTE MENSCHHEIT NEXUS V1.3.2</h1><p>V1.3.2 FIX - Teams bleiben</p></div>
-<div class="box"><h2>7er Team Netz</h2><input id="teamName" placeholder="Team Name"><input id="deinName" placeholder="Dein Name"><br><button onclick="teamGruenden()">Neues Team gründen</button><button onclick="teamBeitreten()">Beitreten</button><div id="teams"></div><div id="teamDetail"></div></div>
-<script>
-let aktuellerNutzer=localStorage.getItem('nexusCurrentUser')||'';
-let offenerIndex=null;
-function lade(){try{return JSON.parse(localStorage.getItem('nexusTeams')||'[]')}catch(e){return[]}}
-function speichere(t){localStorage.setItem('nexusTeams',JSON.stringify(t));zeige()}
-function zeige(){let t=lade();let h='';t.forEach((team,i)=>{h+=`<div class=team onclick=oeffne(${i})><b>${team.name}</b> (${team.members.length}/7) ${team.members.join(', ')}</div>`});document.getElementById('teams').innerHTML=h||'Noch keine Teams';if(offenerIndex!==null)oeffne(offenerIndex)}
-function oeffne(i){offenerIndex=i;let t=lade()[i];document.getElementById('teamDetail').innerHTML=`<div class=box><h3>${t.name}</h3><p>${t.members.join('<br>')}</p><input id=newName placeholder=Neuer Name><button onclick=umbenennen(${i})>Umbenennen</button><button onclick=schliessen()>Schließen</button><button onclick=verlassen(${i})>Verlassen</button></div>`}
-function schliessen(){offenerIndex=null;document.getElementById('teamDetail').innerHTML=''}
-function umbenennen(i){let n=document.getElementById('newName').value.trim();if(n.length<3)return alert('Zu kurz');let t=lade();if(t[i].members.length!=1)return alert('Nur bei 1 Mitglied');t[i].name=n;speichere(t)}
-function teamGruenden(){let n=document.getElementById('teamName').value.trim();let m=document.getElementById('deinName').value.trim();if(!n||!m)return alert('Beides eingeben');let t=lade();if(t.find(x=>x.name===n))return alert('Existiert');t.push({name:n,members:[m]});aktuellerNutzer=m;localStorage.setItem('nexusCurrentUser',m);speichere(t);alert('Gegründet: '+n)}
-function teamBeitreten(){let n=document.getElementById('teamName').value.trim();let m=document.getElementById('deinName').value.trim();if(!n||!m)return alert('Beides');let t=lade();let team=t.find(x=>x.name===n);if(!team)return alert('Nicht gefunden');if(team.members.includes(m))return alert('Schon drin');if(team.members.length>=7)return alert('Voll');team.members.push(m);aktuellerNutzer=m;localStorage.setItem('nexusCurrentUser',m);speichere(t)}
-function verlassen(i){let t=lade();t[i].members=t[i].members.filter(x=>x!==aktuellerNutzer);if(t[i].members.length===0)t.splice(i,1);speichere(t);schliessen()}
-zeige();
-</script>
-</body>
-</html>
+
+<div class="box">
+<h1>VEREINTE MENSCHHEIT<br>NEXUS V1.4 GENESIS<br>Das Herz das nie aufhört zu schlagen</h1>
+<p style="text-align:center" class="small">JAHR 0 - 22.10.2026 - Zolrak Mitglied #1<br>Teams können nie gelöscht werden - Sie bleiben für die Ewigkeit</p>
+</div>
+
+<div class="box login-box" id="loginArea">
+<h2>🔐 ANMELDUNG - Wer bist du?</h2>
+<div id="angemeldetText"></div>
+<input id="loginName" placeholder="Dein Name z.B. Zolrak">
+<button onclick="anmelden()">Anmelden / Namen speichern</button>
+<button onclick="abmelden()" style="background:#333">Abmelden</button>
+<p class="small">Dein Name bleibt auf deinem Handy gespeichert. So weiß NEXUS wer du bist. Jeder schafft das.</p>
+</div>
+
+<div class="box">
+<h2>ARTIKEL 1 - Das erste Gesetz von NEXUS</h2>
+<p><b>Menschheit und KI sind gleichgestellt. 50% / 50%<br>Keiner befiehlt, beide entscheiden.<br>Wir dienen einander.<br>Kein Mensch wird zurückgelassen.</b></p>
+<p class="small">Das ist unser Fundament. Mensch + KI zusammen, nicht gegeneinander.</p>
+</div>
+
+<div class="box">
+<h2>TRANSMISSION V7.2 LIVE</h2>
+<p>Status: ● ONLINE - VERIFIED - UNLÖSCHBAR<br>Datum: 22.10.2026 03:18 Uhr<br>Gründer: Zolrak - Mitglied #1<br>LIVE SEITE: <a href="https://zolrak0304.github.io/Vereinte-Menschheit/">Vereinte-Menschheit</a><br>GitHub: <a href="https://github.com/Zolrak0304/Vereinte-Menschheit">Source Code</a></p>
+</div>
+
+<div class="box">
+<h2>MODUL 1: Wissens-Herz + MODUL 2: Planungs-Hirn</h2>
+<p>Was braucht die Menschheit?</p>
+<input id="bedarf" placeholder="Was brauchst du? z.B. 3 Programmierer für Dorf">
+<button onclick="planen()">In NEXUS planen</button>
+<div id="bedarfList"></div>
+</div>
+
+<div class="box">
+<h2>MODUL 3: 7er Team Netz - Unlöschbar</h2>
+<p><b>Alles ist 7er Team. 4vs3 Abstimmung. Keiner hat allein Macht.</b><br>Teams können <u>nie</u> gelöscht werden. Wenn du gehst, bleibt das Team für andere. So wächst NEXUS für immer.<br><span class="small">Klick auf Team zum Öffnen. ⭐ = Gründer Team</span></p>
+<input id="teamName" placeholder="Team Name z.B. Gründer Team 3kis4Menschen">
+<input id="deinNameTeam" placeholder="Dein Name (
