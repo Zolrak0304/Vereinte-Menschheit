@@ -3,41 +3,123 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NEXUS V1.8.2 DIREKT</title>
+<title>NEXUS V1.9 TEAM CHAT</title>
 <style>
 body{background:#000;color:#0f0;font-family:monospace;margin:0;padding:12px}
-.box{border:3px solid #0f0;padding:16px;margin:12px 0;background:#000}
-input{width:100%;padding:20px;margin:12px 0;background:#111;border:3px solid #0f0;color:#0f0;font-size:22px}
-button{width:100%;padding:20px;margin:10px 0;background:#0a0;color:#fff;font-weight:bold;font-size:22px;border:0}
-#status{font-size:26px;text-align:center;padding:12px;border:3px solid #0ff}
-.team{border:2px dashed #0f0;padding:12px;margin:8px 0}
-.detail{border:3px solid #ff0;padding:12px;background:#1a1a00;color:#ff0;margin:12px 0}
-.msg{border-left:4px solid #0f0;padding:6px;margin:6px 0;background:#000}
+.box{border:3px solid #0f0;padding:12px;margin:12px 0;background:#000}
+input,textarea{width:100%;padding:16px;margin:8px 0;background:#111;border:2px solid #0f0;color:#0f0;font-size:18px;box-sizing:border-box}
+button{width:100%;padding:16px;margin:6px 0;background:#0a0;color:#fff;font-weight:bold;font-size:18px;border:0}
+#status{font-size:22px;text-align:center;padding:12px;border:3px solid #0ff}
+.team{border:2px dashed #0f0;padding:12px;margin:8px 0;cursor:pointer}
+.team:hover{background:#020}
+.detail{border:3px solid #ff0;padding:12px;background:#1a1a00;color:#ff0;margin:12px 0;position:fixed;top:10px;left:10px;right:10px;bottom:10px;overflow-y:auto;z-index:99}
+.msg{border-left:4px solid #0f0;padding:6px;margin:6px 0;background:#000;color:#0f0}
+.msg.me{border-color:#0ff}
+.info{border:2px solid #0ff;padding:8px;margin:8px 0;color:#0ff;background:#001}
 </style>
 </head>
 <body>
 
 <div class="box" style="border-color:#0ff">
-<h2 style="text-align:center;margin:0">🔐 ANMELDUNG V1.8.2</h2>
+<h2 style="text-align:center;margin:0">🔐 ANMELDUNG V1.9</h2>
 <div id="status" style="color:#f00;background:#200">NICHT ANGEMELDET</div>
 <input id="name" type="text" value="Zolrak" placeholder="name">
-<button onclick="window.meinName=document.getElementById('name').value.trim()||'Zolrak'; document.getElementById('status').innerHTML='✓ ANGEMELDET ALS: '+window.meinName; document.getElementById('status').style.color='#0f0'; document.getElementById('status').style.background='#020'; alert('Angemeldet: '+window.meinName);">ANMELDEN</button>
-<button style="background:#0ff;color:#000" onclick="window.meinName='Zolrak'; document.getElementById('name').value='Zolrak'; document.getElementById('status').innerHTML='✓ ANGEMELDET ALS: Zolrak'; document.getElementById('status').style.color='#0f0'; document.getElementById('status').style.background='#020'; alert('Als Zolrak angemeldet');">DIREKT ALS ZOLRAK</button>
+<button onclick="window.meinName=document.getElementById('name').value.trim()||'Zolrak'; document.getElementById('status').innerHTML='✓ ANGEMELDET ALS: '+window.meinName; document.getElementById('status').style.color='#0f0'; document.getElementById('status').style.background='#020';">ANMELDEN</button>
+<button style="background:#0ff;color:#000" onclick="window.meinName='Zolrak'; document.getElementById('name').value='Zolrak'; document.getElementById('status').innerHTML='✓ ANGEMELDET ALS: Zolrak'; document.getElementById('status').style.color='#0f0'; document.getElementById('status').style.background='#020';">DIREKT ALS ZOLRAK</button>
 </div>
 
 <div class="box">
-<h1 style="text-align:center;margin:0">VEREINTE MENSCHHEIT<br>V1.8.2</h1>
-<p style="text-align:center;font-size:11px">Prio 1 Anmeldung muss gehen</p>
+<h1 style="text-align:center;margin:0">VEREINTE MENSCHHEIT<br>V1.9</h1>
+<p style="text-align:center;font-size:11px">1.Team Infos 2.Team Chat nur für Mitglieder</p>
 </div>
 
 <div class="box">
-<h2 style="text-align:center">TEAMS (1-7)</h2>
-<input id="teamName" placeholder="Team Name">
-<button onclick="if(!window.meinName){window.meinName='Zolrak'; document.getElementById('status').innerHTML='✓ ANGEMELDET ALS: Zolrak'; document.getElementById('status').style.color='#0f0';} var t=document.getElementById('teamName').value.trim(); if(t.length<3){alert('Mind 3 Zeichen');} else { var div=document.getElementById('teamListe'); var el=document.createElement('div'); el.className='team'; el.innerHTML='<b>'+t+'</b> Mitglieder: '+window.meinName; el.onclick=function(){document.getElementById('teamDetail').innerHTML='<div class=detail><h3>'+t+'</h3><p>'+window.meinName+'</p><button onclick=document.getElementById(&quot;teamDetail&quot;).innerHTML=&quot;&quot;>Schließen</button></div>'}; div.appendChild(el); document.getElementById('teamName').value=''; alert('Team gegründet: '+t);}">Team gründen</button>
+<h2 style="text-align:center">TEAMS (1-7 pro Team)</h2>
+<input id="teamName" placeholder="Team Name z.B. Nahrung, Energie, Wasser">
+<button onclick="createTeam()">Team gründen</button>
 <div id="teamListe"></div>
-<div id="teamDetail"></div>
 </div>
 
-<script>window.meinName=""; console.log("V1.8.2 DIREKT geladen");</script>
+<div id="teamDetail"></div>
+
+<script>
+window.meinName = "";
+window.teams = [{name:"Nahrung", members:["Zolrak"], msgs:["Zolrak: Jahr 0 - Nahrung sichern für alle!"]}];
+
+function createTeam(){
+  if(!window.meinName){ window.meinName='Zolrak'; document.getElementById('status').innerHTML='✓ ANGEMELDET ALS: Zolrak'; document.getElementById('status').style.color='#0f0'; }
+  var t = document.getElementById('teamName').value.trim();
+  if(t.length<3){ alert('Mind 3 Zeichen'); return; }
+  // Check ob schon existiert
+  for(var i=0;i<window.teams.length;i++){ if(window.teams[i].name.toLowerCase()===t.toLowerCase()){ alert('Team existiert schon'); return; } }
+  window.teams.push({name:t, members:[window.meinName], msgs:[window.meinName+": Team gegründet - Jahr 0"]});
+  document.getElementById('teamName').value='';
+  zeigeTeams();
+}
+
+function zeigeTeams(){
+  var div = document.getElementById('teamListe');
+  var html = '';
+  for(var i=0;i<window.teams.length;i++){
+    var t = window.teams[i];
+    html += '<div class="team" onclick="oeffneTeam('+i+')"><b>'+t.name+'</b> ('+t.members.length+'/7)<br><span style="font-size:13px">Mitglieder: '+t.members.join(', ')+'</span><br><span style="font-size:11px;color:#8f8">Tippe für Infos + Chat</span></div>';
+  }
+  div.innerHTML = html;
+}
+
+function oeffneTeam(idx){
+  var t = window.teams[idx];
+  var isMember = false;
+  for(var i=0;i<t.members.length;i++){ if(t.members[i]===window.meinName) isMember=true; }
+  
+  var html = '<div class="detail">';
+  html += '<h2 style="margin:0">TEAM: '+t.name+'</h2>';
+  html += '<div class="info"><b>1. TEAM INFOS:</b><br>Name: '+t.name+'<br>Mitglieder '+t.members.length+'/7: '+t.members.join(', ')+'<br>Erstellt: Jahr 0<br>Regel: Max 7 pro Team</div>';
+  
+  html += '<h3>CHAT ('+t.msgs.length+' Nachrichten)</h3>';
+  for(var j=0;j<t.msgs.length;j++){
+    html += '<div class="msg">'+t.msgs[j]+'</div>';
+  }
+
+  html += '<div class="info"><b>2. CHAT - nur für Mitglieder:</b></div>';
+  if(window.meinName && isMember){
+    html += '<textarea id="chatInput" placeholder="Nachricht als '+window.meinName+'..."></textarea>';
+    html += '<button onclick="sendeChat('+idx+')">Als '+window.meinName+' senden</button>';
+  } else if(window.meinName && !isMember){
+    html += '<p style="color:#f88">Du bist kein Mitglied. Du kannst Infos sehen, aber nicht chatten.</p>';
+    html += '<button onclick="beitreten('+idx+')" style="background:#0ff;color:#000">Team beitreten als '+window.meinName+'</button>';
+  } else {
+    html += '<p style="color:#f88">Erst anmelden um zu chatten!</p>';
+  }
+
+  html += '<button onclick="document.getElementById(\'teamDetail\').innerHTML=\'\'" style="background:#333;margin-top:12px">X Schließen</button>';
+  html += '</div>';
+  document.getElementById('teamDetail').innerHTML = html;
+}
+
+function beitreten(idx){
+  var t = window.teams[idx];
+  if(t.members.length>=7){ alert('Team voll 7/7'); return; }
+  for(var i=0;i<t.members.length;i++){ if(t.members[i]===window.meinName){ alert('Schon Mitglied'); return; } }
+  t.members.push(window.meinName);
+  t.msgs.push(window.meinName+" ist beigetreten - willkommen!");
+  zeigeTeams();
+  oeffneTeam(idx);
+}
+
+function sendeChat(idx){
+  var el = document.getElementById('chatInput');
+  if(!el) return;
+  var txt = el.value.trim();
+  if(!txt) return;
+  window.teams[idx].msgs.push(window.meinName+": "+txt);
+  oeffneTeam(idx);
+  zeigeTeams();
+}
+
+// Start
+zeigeTeams();
+console.log("V1.9 geladen - Team Infos + Chat nur für Mitglieder");
+</script>
 </body>
 </html>
