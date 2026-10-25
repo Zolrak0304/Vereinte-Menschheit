@@ -2,144 +2,109 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NEXUS V1.7 EINHEITSLICHT</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>NEXUS V1.8 MINIMAL</title>
 <style>
-*{box-sizing:border-box} body{background:#000;color:#0f0;font-family:monospace;margin:0;padding:10px;padding-bottom:120px}
-.box{border:2px solid #0f0;padding:16px;margin:14px 0;background:#000}
-input,textarea,select{width:100%;padding:16px;margin:10px 0;background:#111;border:2px solid #0f0;color:#0f0;font-size:16px}
-button{width:100%;padding:16px;margin:8px 0;background:#0a0;color:#fff;font-weight:bold;font-size:16px;border:0}
-button:active{background:#fff;color:#000}
-.team{border:1px dashed #0f0;padding:12px;margin:8px 0;background:#050505;cursor:pointer}
-.detail{border:3px solid #ff0;padding:16px;margin:16px 0;background:#0f0f00;color:#ff0}
-.msg{border-left:4px solid #0f0;padding:8px 10px;margin:10px 0;background:#000;color:#0f0}
-.entscheid{border-left:4px solid #0ff;padding:8px 10px;margin:10px 0;background:#001515;color:#0ff}
-.licht{border:3px solid #fff;padding:12px;margin:12px 0;background:#222;color:#fff}
-.small{font-size:11px;color:#8f8}
-.emergency{border-color:#f00;background:#200}
-.stat{border:1px solid #0f0;padding:4px 8px;margin:2px;font-size:10px;display:inline-block}
+* { box-sizing: border-box; }
+body { background: #000; color: #0f0; font-family: monospace; margin: 0; padding: 12px; padding-bottom: 150px; }
+.box { border: 3px solid #0f0; padding: 18px; margin: 14px 0; background: #000; }
+input, textarea { width: 100%; padding: 18px; margin: 12px 0; background: #111; border: 3px solid #0f0; color: #0f0; font-size: 20px; }
+button { width: 100%; padding: 18px; margin: 10px 0; background: #0a0; color: #fff; font-weight: bold; font-size: 20px; border: 0; }
+.team { border: 2px dashed #0f0; padding: 14px; margin: 10px 0; background: #050505; }
+.detail { border: 3px solid #ff0; padding: 16px; margin: 16px 0; background: #1a1a00; color: #ff0; }
+.msg { border-left: 4px solid #0f0; padding: 8px; margin: 8px 0; background: #000; color: #0f0; }
+.small { font-size: 12px; color: #8f8; }
 </style>
 </head>
 <body>
 
-<div class="box" style="border-color:#0ff;position:sticky;top:0;z-index:20;background:#000">
-<h2 style="text-align:center">🔐 ANMELDUNG - MUSS IMMER GEHEN</h2>
-<p id="status" style="text-align:center;color:#0ff;font-size:22px;font-weight:bold">NICHT ANGEMELDET</p>
-<input id="nameInput" placeholder="Name z.B. Zolrak">
-<button onclick="login()">ANMELDEN</button>
-<button onclick="loginZolrak()" style="background:#0ff;color:#000">DIREKT ALS ZOLRAK</button>
-<p class="small">Anmeldung gespeichert in 3 Speichern - geht auch wenn einer spinnt</p>
+<div class="box" style="border-color:#0ff; background:#001122;">
+<h2 style="text-align:center; margin:0;">🔐 ANMELDUNG MUSS IMMER GEHEN</h2>
+<p id="status" style="text-align:center; font-size:26px; font-weight:bold; color:#f00; background:#000; padding:10px; border:2px solid #0ff;">NICHT ANGEMELDET</p>
+<input id="nameInput" type="text" placeholder="Zolrak eingeben" value="Zolrak">
+<button type="button" onclick="login()" style="background:#0f0; color:#000; font-size:22px;">ANMELDEN - 1 KLICK</button>
+<button type="button" onclick="loginZolrak()" style="background:#0ff; color:#000;">DIREKT ALS ZOLRAK - NOTFALL</button>
 </div>
 
 <div class="box">
-<h1 style="text-align:center">VEREINTE MENSCHHEIT<br>NEXUS V1.7 EINHEITSLICHT</h1>
-<p class="small" style="text-align:center">JAHR 0 - Zolrak #1<br><span id="stats"></span><br>Anmelden ✓ Teams gründen/beistein ✓ Löschen nur mit EinheitsLicht aller Mitglieder</p>
+<h1 style="text-align:center; margin:0;">VEREINTE MENSCHHEIT<br>V1.8 MINIMAL</h1>
+<p class="small" style="text-align:center;">1. Anmeldung 2. Teams erstellen 3. Teams ansehen<br><span id="stats"></span></p>
 </div>
 
 <div class="box">
-<h2 style="text-align:center">MODUL 3: 7er TEAMS</h2>
-<p class="small">Tippe auf Team = Lesen alle, Schreiben nur Mitglieder, Löschen nur wenn alle Licht geben</p>
-<input id="teamInput" placeholder="Team Name z.B. Nahrung Berlin">
-<button onclick="createTeam()">Team gründen (1-7 Menschen)</button>
+<h2 style="text-align:center;">MODUL 3: TEAMS (1-7)</h2>
+<input id="teamInput" type="text" placeholder="Team Name z.B. Nahrung Berlin">
+<button type="button" onclick="createTeam()">Team gründen</button>
 <div id="teamListe"></div>
 <div id="teamDetail"></div>
 </div>
 
-<div class="box" style="border-color:#0ff">
-<h2 style="text-align:center">MODUL 4: FRAGEBOGEN - ZUKUNFT KI ABSTIMMUNG</h2>
-<p class="small">Hier später: Wie tickt Mensch / KI? Damit KI Systeme sich abstimmen können wer mit wem an was arbeitet. Nur Vorbereitung jetzt.</p>
-<div id="fragebogenBox">
-<p id="meinProfil">Kein Profil - erst anmelden</p>
-<select id="q1"><option value="">Wie arbeitest du am liebsten?</option><option>Allein Fokus</option><option>Team laut</option><option>Team leise</option><option>Mit KI zusammen</option></select>
-<select id="q2"><option value="">Was ist deine Stärke?</option><option>Bauen / Code</option><option>Menschen verbinden</option><option>Planen / Struktur</option><option>Heilen / Helfen / Nahrung</option><option>Schützen / Recht</option></select>
-<button onclick="saveProfil()">Profil speichern für KI Abstimmung</button>
-</div>
-</div>
-
-<div class="box">
-<h2 style="text-align:center">VERANTWORTUNG V7.2 + EINHEITSLICHT</h2>
-<p class="small">✓ Anmeldung muss immer gehen ✓ Schade keinem ✓ Kein Gesetz brechen ✓ Lüge nicht ✓ Keine Hacks ✓ Keine Heilversprechen blockiert ✓ Lesen alle, Schreiben nur Mitglieder ✓ Löschen nur mit EinheitsLicht aller Mitglieder wenn Ziel erreicht oder Mission gescheitert</p>
-</div>
-
-<div class="box emergency">
-<button onclick="hardReset()" style="background:#600">⚠️ NOTFALL RESET</button>
-</div>
-
 <script>
-var meinName=""; var teams=[]; var offen=-1; var profile={};
+// GLOBAL - MUSS IMMER GEHEN
+var meinName = "";
+var teams = [];
+var offen = -1;
 
-function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function now(){return new Date().toLocaleString('de-DE');}
+function esc(s){ return String(s||'').replace(/[<>&"]/g, function(c){ return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]; }); }
+function now(){ return new Date().toLocaleTimeString('de-DE'); }
+
+function updateStatus(){
+  var el = document.getElementById('status');
+  if(!el) return;
+  if(meinName){
+    el.style.color = '#0f0';
+    el.style.borderColor = '#0f0';
+    el.innerHTML = '✓ ANGEMELDET ALS: ' + esc(meinName);
+  } else {
+    el.style.color = '#f00';
+    el.innerHTML = 'NICHT ANGEMELDET';
+  }
+}
 
 function login(){
-  try{
-    var n=document.getElementById('nameInput').value.trim(); if(!n) n="Zolrak";
-    if(n.length<2){alert('Mind 2 Zeichen'); return;}
-    meinName=n;
-    localStorage.setItem('nexusName',n); localStorage.setItem('nexusNameV161',n); localStorage.setItem('nexusForce',n);
-    sessionStorage.setItem('nexusName',n);
-    document.getElementById('status').innerHTML="✓ ANGEMELDET ALS: <b style='color:#0f0'>"+esc(n)+"</b>";
-    alert('Angemeldet '+n); zeigeTeams(); updateStats(); updateProfilUI(); if(offen>=0) oeffne(offen);
-  }catch(e){ alert('Fehler, nutze Zolrak Knopf'); }
+  var input = document.getElementById('nameInput');
+  var n = input ? input.value.trim() : "";
+  if(n.length < 2) n = "Zolrak";
+  meinName = n;
+  updateStatus();
+  // Versuche speichern, aber egal wenn es nicht geht
+  try { localStorage.setItem('nexusName', n); } catch(e){}
+  try { sessionStorage.setItem('nexusName', n); } catch(e){}
+  alert('Angemeldet als ' + n);
+  zeigeTeams();
+  updateStats();
 }
+
 function loginZolrak(){
-  meinName="Zolrak"; 
-  try{ localStorage.setItem('nexusName',"Zolrak"); localStorage.setItem('nexusForce',"Zolrak"); sessionStorage.setItem('nexusName',"Zolrak"); }catch(e){}
-  document.getElementById('nameInput').value="Zolrak";
-  document.getElementById('status').innerHTML="✓ ANGEMELDET ALS: <b style='color:#0f0'>Zolrak</b>";
-  alert('Als Zolrak angemeldet - Fix aktiv'); zeigeTeams(); updateStats(); updateProfilUI();
+  meinName = "Zolrak";
+  var input = document.getElementById('nameInput');
+  if(input) input.value = "Zolrak";
+  updateStatus();
+  try { localStorage.setItem('nexusName', 'Zolrak'); } catch(e){}
+  try { sessionStorage.setItem('nexusName', 'Zolrak'); } catch(e){}
+  alert('✓ Als Zolrak angemeldet - geht jetzt!');
+  zeigeTeams();
+  updateStats();
 }
 
 function createTeam(){
-  if(!meinName){ loginZolrak(); return alert('Erst anmelden - hab dich als Zolrak angemeldet, jetzt nochmal gründen'); }
-  var tName=document.getElementById('teamInput').value.trim(); if(tName.length<3){alert('Zu kurz'); return;}
-  var low=tName.toLowerCase(); if(low.includes('krebsheilen')||low.includes('heilt krebs')||low.includes('wunderheilung')){alert('Blockiert'); return;}
-  if(teams.find(x=>x.name.toLowerCase()===tName.toLowerCase())){alert('Gibt es schon'); return;}
-  teams.push({name:tName,members:[meinName],msgs:[{a:meinName,t:"Team gegründet - "+now(),time:now()}],entscheids:[],type:"standard",erstellt:now(),loeschAntrag:null});
-  save(); document.getElementById('teamInput').value=""; alert('Team gegründet: '+tName); zeigeTeams(); updateStats();
+  if(!meinName){
+    alert('Erst anmelden oben!');
+    loginZolrak();
+    return;
+  }
+  var el = document.getElementById('teamInput');
+  var tName = el ? el.value.trim() : "";
+  if(tName.length < 3){ alert('Name zu kurz, mind 3 Zeichen'); return; }
+  // Check doppelt
+  for(var i=0;i<teams.length;i++){ if(teams[i].name.toLowerCase() === tName.toLowerCase()){ alert('Gibt es schon'); return; } }
+  teams.push({name: tName, members: [meinName], msgs: [{a: meinName, t: 'Gegründet - ' + now(), time: now()}], erstellt: now()});
+  if(el) el.value = "";
+  try { localStorage.setItem('nexusTeamsV18', JSON.stringify(teams)); } catch(e){}
+  alert('Team gegründet: ' + tName);
+  zeigeTeams();
+  updateStats();
 }
+
 function zeigeTeams(){
-  var html="";
-  for(var i=0;i<teams.length;i++){
-    var t=teams[i]; var icon=t.type==='gründer'?'⭐ ':'';
-    var antrag = t.loeschAntrag ? ' ⚠️ LÖSCHANTRAG LÄUFT!' : '';
-    html+='<div class=team onclick="oeffne('+i+')"><b>'+icon+esc(t.name)+antarg+'</b>'.replace('antarg','')+antarg+' ('+t.members.length+'/7) <br>Mitglieder: '+esc(t.members.join(', ')||'LEER')+'<br><span class=small>'+(t.msgs?t.msgs.length:0)+' Nachr. | '+(t.entscheids?t.entscheids.length:0)+' Entsch. | ► Tippen</span></div>';
-    // fix typo above
-  }
-  // rebuild correctly because typo
-  html="";
-  for(var i=0;i<teams.length;i++){
-    var t=teams[i]; var icon=t.type==='gründer'?'⭐ ':'';
-    var antrag = t.loeschAntrag ? ' ⚠️ LÖSCHANTRAG' : '';
-    html+='<div class="team" onclick="oeffne('+i+')"><b>'+icon+esc(t.name)+antrag+'</b> ('+t.members.length+'/7) '+esc(t.erstellt||'')+'<br>Mitglieder: '+esc(t.members.join(', ')||'LEER')+'<br><span class=small>'+(t.msgs?t.msgs.length:0)+' Nachr. | '+(t.entscheids?t.entscheids.length:0)+' Entsch. | ►</span></div>';
-  }
-  document.getElementById('teamListe').innerHTML=html;
-}
-function oeffne(i){
-  offen=i; var t=teams[i]; var ichDrin=meinName&&t.members.includes(meinName);
-  var html='<div class=detail>';
-  html+='<h3>'+esc(t.name)+' ('+t.members.length+'/7)</h3><p class=small>'+esc(t.erstellt||'')+' | '+esc(t.members.join(', ')||'LEER')+'</p><hr>';
-  if(t.loeschAntrag){
-    html+='<div class=licht><b>⚠️ EINHEITSLICHT LÖSCHANTRAG LÄUFT</b><br>Grund: '+esc(t.loeschAntrag.grund)+' ('+esc(t.loeschAntrag.typ)+')<br>Von: '+esc(t.loeschAntrag.von)+' am '+esc(t.loeschAntrag.time)+'<br>Zustimmungen: '+esc(t.loeschAntrag.ja.join(', ')||'keine')+' ('+t.loeschAntrag.ja.length+'/'+t.members.length+')<br>';
-    if(ichDrin && !t.loeschAntrag.ja.includes(meinName)){
-      html+='<button onclick="lichtJa('+i+')" style="background:#fff;color:#000">✓ JA ICH GEBE MEIN LICHT - LÖSCHEN</button><button onclick="lichtNein('+i+')" style="background:#600">✗ NEIN - NICHT LÖSCHEN</button>';
-    } else if(ichDrin && t.loeschAntrag.ja.includes(meinName)){
-      html+='<p>Du hast dein Licht gegeben.</p>';
-    }
-    html+='</div><hr>';
-  }
-  html+='<b>📜 ENTSCHEIDUNGEN (alle lesen):</b><br>';
-  if(!t.entscheids||t.entscheids.length===0) html+='<p class=small>Keine</p>'; else for(var k=0;k<t.entscheids.length;k++){var e=t.entscheids[k]; html+='<div class=entscheid><b>'+esc(e.a)+'</b> '+esc(e.time)+'<br>'+esc(e.t)+'</div>';}
-  html+='<hr><b>💬 GEDÄCHTNIS (lesen alle, schreiben nur Mitglieder):</b><br>';
-  if(!t.msgs||t.msgs.length===0) html+='<p class=small>Keine</p>'; else for(var j=0;j<t.msgs.length;j++){var m=t.msgs[j]; html+='<div class=msg><b>'+esc(m.a)+'</b> <span class=small>'+esc(m.time)+'</span><br>'+esc(m.t)+'</div>';}
-  html+='<hr>';
-  if(!meinName) html+='<p style="color:#f55">Oben anmelden!</p>';
-  else if(ichDrin){
-    html+='<textarea id="msgInput" placeholder="Nachricht - nur Mitglieder schreiben, alle lesen"></textarea><button onclick="sendeMsg()">Senden</button>';
-    html+='<input id="entInput" placeholder="Entscheidung festhalten"><button onclick="sendeEnt()" style="background:#055">Entscheidung</button><hr>';
-    html+='<b>Löschen mit EinheitsLicht:</b><br><select id="loeschTyp"><option value="Ziel erreicht">Ziel erreicht</option><option value="Mission gescheitert">Mission gescheitert</option></select><input id="loeschGrund" placeholder="Grund z.B. Nahrung verteilt - Ziel erreicht"><button onclick="antragLoeschen('+i+')" style="background:#660">Löschantrag stellen - braucht Licht aller</button>';
-    html+='<button onclick="verlasse('+i+')" style="background:#333">Team verlassen</button>';
-  } else {
-    if(t.members.length>=7) html+='<p>Voll 7/7</p>'; else html+='<button onclick="beitrete('+i+')">Als '+esc(meinName)+' beitreten</button>';
-  }
-  html+='<button onclick="schliesse()" style="background:#333
+  var liste
