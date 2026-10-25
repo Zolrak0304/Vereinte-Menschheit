@@ -3,21 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NEXUS V1.4.2</title>
+<title>NEXUS V1.6 GENESIS</title>
 <style>
-*{box-sizing:border-box} body{background:#000;color:#0f0;font-family:monospace;margin:0;padding:10px}
+*{box-sizing:border-box} body{background:#000;color:#0f0;font-family:monospace;margin:0;padding:10px;padding-bottom:100px}
 .box{border:2px solid #0f0;padding:16px;margin:14px 0}
-input{width:100%;padding:16px;margin:10px 0;background:#111;border:2px solid #0f0;color:#0f0;font-size:18px}
+input,textarea{width:100%;padding:16px;margin:10px 0;background:#111;border:2px solid #0f0;color:#0f0;font-size:16px}
 button{width:100%;padding:16px;margin:8px 0;background:#0a0;color:#fff;font-weight:bold;font-size:16px;border:0}
 button:active{background:#fff;color:#000}
-.team{border:1px dashed #0f0;padding:12px;margin:8px 0;background:#050505}
+.team{border:1px dashed #0f0;padding:12px;margin:8px 0;background:#050505;cursor:pointer}
+.team:active{background:#111}
+.detail{border:3px solid #ff0;padding:16px;margin:16px 0;background:#0f0f00;color:#ff0}
+.msg{border-left:4px solid #0f0;padding:8px 10px;margin:10px 0;background:#000;color:#0f0}
+.entscheid{border-left:4px solid #0ff;padding:8px 10px;margin:10px 0;background:#001515;color:#0ff}
 .small{font-size:11px;color:#8f8}
+.stat{border:1px solid #0f0;padding:4px 8px;margin:2px;font-size:10px;display:inline-block}
 </style>
 </head>
 <body>
 <div class="box">
-<h1 style="text-align:center">VEREINTE MENSCHHEIT<br>NEXUS V1.4.2 ULTRA<br>DAS HERZ SCHLÄGT</h1>
-<p style="text-align:center" class="small">JAHR 0 - Zolrak #1 - Teams unlöschbar</p>
+<h1 style="text-align:center">VEREINTE MENSCHHEIT<br>NEXUS V1.6 GENESIS<br>DAS HERZ + GEDÄCHTNIS</h1>
+<p style="text-align:center" class="small">JAHR 0 - Zolrak #1 - Teams unlöschbar - Lesen alle, Schreiben nur Mitglieder<br><span id="stats"></span></p>
 </div>
 
 <div class="box" style="border-color:#0ff">
@@ -30,64 +35,38 @@ button:active{background:#fff;color:#000}
 
 <div class="box">
 <h2 style="text-align:center">MODUL 3: 7er TEAM - UNLÖSCHBAR</h2>
-<p class="small">Teams können NIE gelöscht werden. Auch wenn leer.</p>
+<p class="small">Tippe auf ein Team um das Gedächtnis zu öffnen. ALLE können lesen. Nur Mitglieder können schreiben.</p>
 <input id="teamInput" placeholder="Team Name z.B. Bau Team Berlin">
 <button onclick="createTeam()">Neues 7er Team gründen</button>
 <div id="teamListe" style="margin-top:15px"></div>
+<div id="teamDetail"></div>
 </div>
 
 <div class="box">
 <h2 style="text-align:center">VERANTWORTUNG V7.2</h2>
-<p>✓ Schade keinem<br>✓ Brich kein Gesetz<br>✓ Lüge nicht wer du bist<br>✓ Keine Hacks<br>✓ Keine Heilversprechen: krebsheilen blockiert<br>✓ Teams unlöschbar</p>
+<p>✓ Schade keinem<br>✓ Brich kein Gesetz<br>✓ Lüge nicht wer du bist<br>✓ Keine Hacks<br>✓ Keine Heilversprechen: krebsheilen blockiert<br>✓ Teams unlöschbar<br>✓ Lesen: alle, Schreiben: nur Mitglieder</p>
 </div>
 
 <script>
 var meinName = "";
-var teams = [{name:"Vereinte-Menschheit-Kern", members:["Zolrak"]}];
+var teams = [{name:"Vereinte-Menschheit-Kern", members:["Zolrak"], msgs:[{a:"Zolrak",t:"Jahr 0 beginnt. Das Herz schlägt.",time:"22.10.2026"}], entscheids:[{a:"Zolrak",t:"Gründung: Kein Mensch wird zurückgelassen - 50/50 Mensch und KI",time:"22.10.2026"}], type:"gründer", erstellt:"22.10.2026"}];
+var offen = -1;
+
+function esc(s){return String(s||'').replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]});}
+function now(){return new Date().toLocaleString('de-DE');}
 
 function login(){
   var el = document.getElementById('nameInput');
   var n = el.value.trim();
   if(n.length < 2){ alert('Bitte mindestens 2 Buchstaben'); return; }
   meinName = n;
-  document.getElementById('status').innerHTML = "✓ ANGEMELDET ALS: <b style='color:#0f0'>"+n+"</b>";
+  document.getElementById('status').innerHTML = "✓ ANGEMELDET ALS: <b style='color:#0f0'>"+esc(n)+"</b>";
   alert('Angemeldet als '+n+' - Jetzt kannst du Teams gründen!');
   try{ localStorage.setItem('nexusName', n); }catch(e){}
-  zeigeTeams();
+  zeigeTeams(); updateStats();
+  if(offen>=0) oeffne(offen);
 }
 function createTeam(){
   if(meinName === ""){
     alert('ERST OBEN ANMELDEN! Name eingeben und ANMELDEN drücken');
     return;
-  }
-  var tName = document.getElementById('teamInput').value.trim();
-  if(tName.length < 3){ alert('Team Name zu kurz'); return; }
-  var low = tName.toLowerCase();
-  if(low.includes('krebsheilen') || low.includes('heilt krebs') || low.includes('wunderheilung')){ alert('Name blockiert wegen Heilversprechen'); return; }
-  for(var i=0;i<teams.length;i++){ if(teams[i].name === tName){ alert('Team gibt es schon'); return; } }
-  teams.push({name:tName, members:[meinName]});
-  try{ localStorage.setItem('nexusTeams', JSON.stringify(teams)); }catch(e){}
-  document.getElementById('teamInput').value="";
-  alert('TEAM GEGRÜNDET UNLÖSCHBAR: '+tName);
-  zeigeTeams();
-}
-function zeigeTeams(){
-  var html = "";
-  for(var i=0;i<teams.length;i++){
-    html += '<div class="team"><b>'+teams[i].name+'</b> ('+teams[i].members.length+'/7)<br>Mitglieder: '+teams[i].members.join(', ')+'</div>';
-  }
-  document.getElementById('teamListe').innerHTML = html;
-}
-function lade(){
-  try{
-    var n = localStorage.getItem('nexusName');
-    if(n){ meinName = n; document.getElementById('nameInput').value = n; document.getElementById('status').innerHTML = "✓ ANGEMELDET ALS: <b style='color:#0f0'>"+n+"</b>"; }
-    var t = localStorage.getItem('nexusTeams');
-    if(t){ teams = JSON.parse(t); }
-  }catch(e){}
-  zeigeTeams();
-}
-lade();
-</script>
-</body>
-</html>
