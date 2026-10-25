@@ -2,150 +2,92 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>NEXUS V1.4.1</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NEXUS V1.4.2</title>
 <style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{background:#000;color:#0f0;font-family:monospace;margin:0;padding:10px;padding-bottom:100px}
-.box{border:2px solid #0f0;padding:16px;margin:14px 0;background:#000}
-h1,h2{color:#0f0;text-align:center}
-input{width:100%;padding:16px;margin:10px 0;background:#111;border:2px solid #0f0;color:#0f0;font-size:18px;border-radius:0}
-button{width:100%;background:#0a0;color:#fff;border:0;padding:16px;margin:8px 0;font-weight:bold;font-size:16px;display:block}
-button:active{background:#0f0;color:#000}
-.team{border:1px dashed #0f0;padding:14px;margin:10px 0;background:#050505}
-.detail{border:2px solid #ff0;padding:14px;margin:14px 0;background:#111;color:#ff0}
-.small{font-size:12px;color:#8f8}
-.regel{border-left:3px solid #0f0;padding-left:10px;margin:8px 0}
-.warn{color:#ff0} .block{color:#f66}
+*{box-sizing:border-box} body{background:#000;color:#0f0;font-family:monospace;margin:0;padding:10px}
+.box{border:2px solid #0f0;padding:16px;margin:14px 0}
+input{width:100%;padding:16px;margin:10px 0;background:#111;border:2px solid #0f0;color:#0f0;font-size:18px}
+button{width:100%;padding:16px;margin:8px 0;background:#0a0;color:#fff;font-weight:bold;font-size:16px;border:0}
+button:active{background:#fff;color:#000}
+.team{border:1px dashed #0f0;padding:12px;margin:8px 0;background:#050505}
+.small{font-size:11px;color:#8f8}
 </style>
 </head>
 <body>
-
 <div class="box">
-<h1>VEREINTE MENSCHHEIT<br>NEXUS V1.4.1 FIX<br>DAS HERZ SCHLÄGT</h1>
-<p style="text-align:center" class="small">JAHR 0 - Zolrak #1 - Teams unlöschbar - V1.4.1</p>
+<h1 style="text-align:center">VEREINTE MENSCHHEIT<br>NEXUS V1.4.2 ULTRA<br>DAS HERZ SCHLÄGT</h1>
+<p style="text-align:center" class="small">JAHR 0 - Zolrak #1 - Teams unlöschbar</p>
 </div>
 
 <div class="box" style="border-color:#0ff">
-<h2>🔐 ANMELDUNG</h2>
-<div id="loginStatus" style="text-align:center;padding:10px;color:#0ff">Lade...</div>
-<input id="loginName" type="text" placeholder="Dein Name z.B. Zolrak" autocomplete="off">
-<button type="button" onclick="anmelden()">ANMELDEN / NAMEN SPEICHERN</button>
-<button type="button" onclick="abmelden()" style="background:#333">Abmelden</button>
-<p class="small">Tippe deinen Namen ein und drücke Anmelden. Bleibt auf Handy gespeichert.</p>
+<h2 style="text-align:center">🔐 ANMELDUNG - ULTRA SIMPEL</h2>
+<p id="status" style="text-align:center;color:#0ff;font-size:20px">NICHT ANGEMELDET</p>
+<input id="nameInput" placeholder="Dein Name hier z.B. Zolrak">
+<button onclick="login()">ANMELDEN - EINEN KLICK</button>
+<p class="small">Dein Name wird unten automatisch benutzt. Kein komplizierter Speicher.</p>
 </div>
 
 <div class="box">
-<h2>ARTIKEL 1</h2>
-<p><b>Menschheit und KI gleichgestellt 50/50<br>Keiner befiehlt, beide entscheiden.<br>Kein Mensch wird zurückgelassen.</b></p>
+<h2 style="text-align:center">MODUL 3: 7er TEAM - UNLÖSCHBAR</h2>
+<p class="small">Teams können NIE gelöscht werden. Auch wenn leer.</p>
+<input id="teamInput" placeholder="Team Name z.B. Bau Team Berlin">
+<button onclick="createTeam()">Neues 7er Team gründen</button>
+<div id="teamListe" style="margin-top:15px"></div>
 </div>
 
 <div class="box">
-<h2>MODUL 3: 7er TEAM NETZ - UNLÖSCHBAR</h2>
-<p>Teams können nie gelöscht werden. Wenn leer, bleibt es bestehen.</p>
-<input id="teamName" type="text" placeholder="Team Name z.B. Bauer Team Berlin">
-<input id="deinNameTeam" type="text" placeholder="Dein Name (auto)">
-<button type="button" onclick="teamGruenden()">Neues 7er Team gründen</button>
-<button type="button" onclick="teamBeitreten()">Team beitreten (Name oben eingeben)</button>
-<div id="teams" style="margin-top:15px"></div>
-<div id="teamDetail"></div>
-</div>
-
-<div class="box">
-<h2>VERANTWORTUNG V7.2</h2>
-<div class="regel">✓ Schade keinem Menschen</div>
-<div class="regel">✓ Brich kein Gesetz</div>
-<div class="regel">✓ Lüge nicht wer du bist</div>
-<div class="regel">✓ Keine unbefugten Zugriffe</div>
-<div class="regel">✓ Rationale Namen nur - <span class="block">Blockiert: krebsheilen, heilt Krebs, Wunderheilung</span></div>
-<div class="regel">✓ Gesundheit nur Austausch, kein Arzt Ersatz</div>
-<div class="regel">✓ Teams sind unlöschbar</div>
+<h2 style="text-align:center">VERANTWORTUNG V7.2</h2>
+<p>✓ Schade keinem<br>✓ Brich kein Gesetz<br>✓ Lüge nicht wer du bist<br>✓ Keine Hacks<br>✓ Keine Heilversprechen: krebsheilen blockiert<br>✓ Teams unlöschbar</p>
 </div>
 
 <script>
-// --- HILFSFUNKTION ZUERST ---
-function sichererText(s){return String(s||'').replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]});}
+var meinName = "";
+var teams = [{name:"Vereinte-Menschheit-Kern", members:["Zolrak"]}];
 
-let aktuellerNutzer = '';
-try{ aktuellerNutzer = localStorage.getItem('nexusCurrentUser')||''; }catch(e){}
-
-function aktualisiereLoginAnzeige(){
-  let st = document.getElementById('loginStatus');
-  let tn = document.getElementById('deinNameTeam');
-  if(aktuellerNutzer){
-    st.innerHTML = '✓ Angemeldet als: <b style="color:#0f0;font-size:20px">'+sichererText(aktuellerNutzer)+'</b>';
-    if(tn) tn.value = aktuellerNutzer;
-    document.getElementById('loginName').value = aktuellerNutzer;
-  }else{
-    st.innerHTML = '<span style="color:#f55">Nicht angemeldet - Name eingeben</span>';
+function login(){
+  var el = document.getElementById('nameInput');
+  var n = el.value.trim();
+  if(n.length < 2){ alert('Bitte mindestens 2 Buchstaben'); return; }
+  meinName = n;
+  document.getElementById('status').innerHTML = "✓ ANGEMELDET ALS: <b style='color:#0f0'>"+n+"</b>";
+  alert('Angemeldet als '+n+' - Jetzt kannst du Teams gründen!');
+  try{ localStorage.setItem('nexusName', n); }catch(e){}
+  zeigeTeams();
+}
+function createTeam(){
+  if(meinName === ""){
+    alert('ERST OBEN ANMELDEN! Name eingeben und ANMELDEN drücken');
+    return;
   }
-}
-function anmelden(){
-  let el = document.getElementById('loginName');
-  let n = el.value.trim();
-  if(!n || n.length<2){ alert('Mindestens 2 Zeichen!'); return; }
-  aktuellerNutzer = n;
-  try{ localStorage.setItem('nexusCurrentUser', n); }catch(e){}
-  aktualisiereLoginAnzeige();
-  zeigeTeams();
-  alert('Angemeldet: '+n);
-}
-function abmelden(){
-  if(!confirm('Abmelden?')) return;
-  aktuellerNutzer='';
-  try{ localStorage.removeItem('nexusCurrentUser'); }catch(e){}
-  aktualisiereLoginAnzeige();
-}
-
-function istGueltigerTeamName(name){
-  let low=name.toLowerCase();
-  const bad=['krebsheilen','heilt krebs','krebs heilen','wunderheilung','garantiert heilung','heilt alle','wunder heilung'];
-  for(let b of bad){ if(low.includes(b)) return {ok:false, grund:b}; }
-  if(name.length<3) return {ok:false, grund:'zu kurz'};
-  if(name.length>40) return {ok:false, grund:'zu lang'};
-  return {ok:true};
-}
-function ladeTeams(){
-  try{
-    let s=localStorage.getItem('nexusTeams');
-    if(s) return JSON.parse(s);
-  }catch(e){}
-  return [{name:"Vereinte-Menschheit-Kern",members:["Zolrak"],type:"gründer",erstellt:"2026-10-22"}];
-}
-function speichereTeams(t){
-  try{ localStorage.setItem('nexusTeams', JSON.stringify(t)); }catch(e){}
+  var tName = document.getElementById('teamInput').value.trim();
+  if(tName.length < 3){ alert('Team Name zu kurz'); return; }
+  var low = tName.toLowerCase();
+  if(low.includes('krebsheilen') || low.includes('heilt krebs') || low.includes('wunderheilung')){ alert('Name blockiert wegen Heilversprechen'); return; }
+  for(var i=0;i<teams.length;i++){ if(teams[i].name === tName){ alert('Team gibt es schon'); return; } }
+  teams.push({name:tName, members:[meinName]});
+  try{ localStorage.setItem('nexusTeams', JSON.stringify(teams)); }catch(e){}
+  document.getElementById('teamInput').value="";
+  alert('TEAM GEGRÜNDET UNLÖSCHBAR: '+tName);
   zeigeTeams();
 }
-let offenerIndex=null;
 function zeigeTeams(){
-  let t=ladeTeams();
-  let html='';
-  t.forEach((team,i)=>{
-    let icon=team.type==='gründer'?'⭐ ':'';
-    let mem=team.members.length===0?'<i>LEER - erwecke es!</i>':sichererText(team.members.join(', '));
-    html+='<div class="team" onclick="oeffneGruppe('+i+')"><b>'+icon+sichererText(team.name)+'</b> ('+team.members.length+'/7)<br>'+mem+'<br><small>► Öffnen</small></div>';
-  });
-  document.getElementById('teams').innerHTML=html;
-  if(offenerIndex!==null) oeffneGruppe(offenerIndex);
-}
-function oeffneGruppe(i){
-  offenerIndex=i;
-  let teams=ladeTeams();
-  let t=teams[i];
-  if(!t) return;
-  let ichDrin = aktuellerNutzer && t.members.includes(aktuellerNutzer);
-  let aktion='';
-  if(!aktuellerNutzer) aktion='<p class=warn>Oben anmelden!</p>';
-  else if(ichDrin) aktion='<p style=color:#0f0>Du bist drin ✓</p><button type=button onclick="verlasseTeam('+i+')" style="background:#a00">Verlassen (Team bleibt)</button>';
-  else {
-    if(t.members.length>=7) aktion='<p class=block>Voll 7/7</p>';
-    else aktion='<button type=button onclick="schnellBeitreten('+i+')">Als '+sichererText(aktuellerNutzer)+' beitreten</button>';
+  var html = "";
+  for(var i=0;i<teams.length;i++){
+    html += '<div class="team"><b>'+teams[i].name+'</b> ('+teams[i].members.length+'/7)<br>Mitglieder: '+teams[i].members.join(', ')+'</div>';
   }
-  document.getElementById('teamDetail').innerHTML='<div class=detail><h3>'+sichererText(t.name)+'</h3>Mitglieder: '+sichererText(t.members.join(', ')||'LEER')+'<br><br>'+aktion+'<br><br><button type=button onclick="schliesseGruppe()">Schließen</button></div>';
+  document.getElementById('teamListe').innerHTML = html;
 }
-function schliesseGruppe(){offenerIndex=null;document.getElementById('teamDetail').innerHTML='';}
-function teamGruenden(){
-  if(!aktuellerNutzer){ alert('Erst oben anmelden!'); return; }
-  let n=document.getElementById('teamName').value.trim();
-  if(!n){ alert('Name eingeben'); return; }
-  let p=istGueltigerTeamName
+function lade(){
+  try{
+    var n = localStorage.getItem('nexusName');
+    if(n){ meinName = n; document.getElementById('nameInput').value = n; document.getElementById('status').innerHTML = "✓ ANGEMELDET ALS: <b style='color:#0f0'>"+n+"</b>"; }
+    var t = localStorage.getItem('nexusTeams');
+    if(t){ teams = JSON.parse(t); }
+  }catch(e){}
+  zeigeTeams();
+}
+lade();
+</script>
+</body>
+</html>
