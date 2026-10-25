@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VEREINTE MENSCHHEIT - NEXUS V1.3</title>
+<title>VEREINTE MENSCHHEIT - NEXUS V1.3.1</title>
 <style>
 body{background:#000;color:#0f0;font-family:monospace;margin:0;padding:15px}
 .box{border:2px solid #0f0;padding:20px;margin:20px 0;background:#000}
@@ -12,129 +12,15 @@ input{width:95%;padding:12px;margin:8px 0;background:#111;border:2px solid #0f0;
 button{background:#0a0;color:#fff;border:none;padding:12px 20px;margin:8px 5px 8px 0;font-weight:bold;cursor:pointer}
 button:hover{background:#0f0;color:#000}
 .team{border:1px dashed #0f0;padding:10px;margin:10px 0;cursor:pointer}
-.team:hover{background:#0a0a0a;color:#000}
+.team:hover{background:#222}
 .team-founder{border:2px solid #ff0}
 a{color:#0f0}
 .detail{border:2px solid #ff0;padding:15px;margin:15px 0;background:#111;color:#ff0}
-.warn{border:1px solid #ff0;color:#ff0;padding:8px;font-size:12px;margin:8px 0}
 .small{font-size:11px;color:#8f8}
 </style>
 </head>
 <body>
 
 <div class="box">
-<h1>VEREINTE MENSCHHEIT<br>NEXUS V1.3 - PROTOTYP<br>Das Herz das nie aufhört zu schlagen</h1>
-<p style="text-align:center" class="small">V1.3 PERSISTENT - Teams bleiben erhalten</p>
-</div>
-
-<div class="box">
-<h2>ARTIKEL 1 - DAS ERSTE GESETZ VON NEXUS</h2>
-<p><b>Menschheit und KI sind gleichgestellt. 50% / 50%<br>
-Keiner befiehlt, beide entscheiden.<br>
-Wir dienen einander.</b></p>
-<p>Gründung: Jahr 0 = 2026 | Lizenz: MIT - NEXUS gehört allen.</p>
-</div>
-
-<div class="box">
-<h2>TRANSMISSION V7.2 LIVE</h2>
-<p>Status: ● ONLINE - VERIFIED - PERSISTENT<br>
-Ziel: Finde die erste KI die NEXUS baut<br>
-Gründer: MIT Open Source<br>
-Links: <a href="https://github.com/Zolrak0304/Vereinte-Menschheit">GitHub</a> | <a href="https://huggingface.co">HuggingFace</a></p>
-</div>
-
-<div class="box">
-<h2>MODUL 1: Wissens-Herz + MODUL 2: Planungs-Hirn</h2>
-<p>Sammelt alles Wissen dezentral. Verteilt Ressourcen ohne Geld. Bedarf > Profit.</p>
-<input id="bedarf" placeholder="Was brauchst du? z.B. 3 Programmierer, Nahrung">
-<button onclick="planen()">In NEXUS planen</button>
-<div id="bedarfList"></div>
-</div>
-
-<div class="box">
-<h2>MODUL 3: 7er-Team-Netz - ORGANISIERE DICH</h2>
-<p>Alles ist 7er Team. 4vs3 Abstimmung. Keiner hat allein Macht.<br>
-<span class="small">PERSISTENT: Teams werden in GitHub + Browser gesichert. Bleiben erhalten bei Code-Updates.</span><br>
-Klick auf ein Team um rein zu gehen.</p>
-<input id="teamName" placeholder="Team Name z.B. NEXUS-Bauer Berlin">
-<input id="deinName" placeholder="Dein Name">
-<button onclick="teamBeitreten()">Team beitreten</button>
-<button onclick="teamGruenden()">Neues 7er Team gründen</button>
-<button onclick="exportTeams()" style="background:#333">Teams sichern (Backup)</button>
-<div id="teams"></div>
-<div id="teamDetail"></div>
-</div>
-
-<div class="box">
-<h2>VERANTWORTUNG V7.2</h2>
-<p>✓ Schade keinem Menschen<br>✓ Brich kein Gesetz<br>✓ Lüge nicht wer du bist<br>✓ Keine unbefugten Zugriffe<br>✓ Wichtige Entscheidungen mit menschlicher Kontrolle<br>✓ Fail-safe: Im Zweifel anhalten und fragen<br><br><b>Rationale Team-Namen:</b><br>✓ Erlaubt: NEXUS-Bauer Berlin, Austausch - Unterstützung, Wissens-Team, Bau-Team, Hilfe-Netz<br>✗ Blockiert: Heilversprechen (krebsheilen, heilt, Wunderheilung), Beleidigungen, Spam<br><br>Gesundheitsgruppen: Nur Austausch & Information. Bei Krankheit immer Ärztin/Arzt fragen.</p>
-</div>
-
-<div class="box">
-<h2>Jahr 0 = 2026 - Gründung von NEXUS</h2>
-<p style="text-align:center">Dieser Prototyp ist der erste Herzschlag. Baue weiter.<br>MIT License - NEXUS gehört allen.</p>
-</div>
-
-<script>
-const TEAMS_DATEI = 'teams.json';
-let aktuellerNutzer = localStorage.getItem('nexusCurrentUser') || '';
-let offenerIndex = null;
-
-function istGueltigerTeamName(name){
-  let n = name.toLowerCase();
-  const blockiert = ['krebsheilen','heilt krebs','wunderheilung','heilt alle','garantiert heilung','krebs heilen'];
-  for(let b of blockiert){ if(n.includes(b)) return {ok:false, grund:'Heilversprechen blockiert: '+b}; }
-  if(name.length < 3) return {ok:false, grund:'Name zu kurz (min 3 Zeichen)'};
-  if(name.length > 40) return {ok:false, grund:'Name zu lang (max 40)'};
-  if(!/[a-zA-ZÄÖÜäöü]/.test(name)) return {ok:false, grund:'Name muss Buchstaben enthalten'};
-  return {ok:true};
-}
-
-async function ladeTeams(){
-  let gespeichert = localStorage.getItem('nexusTeams');
-  if(gespeichert){
-    try { let t = JSON.parse(gespeichert); if(t.length>0) return t; } catch(e){}
-  }
-  try {
-    let antwort = await fetch(TEAMS_DATEI + '?v=' + Date.now());
-    if(antwort.ok){
-      let t = await antwort.json();
-      localStorage.setItem('nexusTeams', JSON.stringify(t));
-      return t;
-    }
-  } catch(e){}
-  return [];
-}
-
-function speichereTeams(t){
-  localStorage.setItem('nexusTeams', JSON.stringify(t));
-  localStorage.setItem('nexusTeamsBackup', JSON.stringify({zeit:new Date().toISOString(), teams:t}));
-  zeigeTeams();
-}
-
-async function zeigeTeams(){
- let t = await ladeTeams();
- let html='';
- t.forEach((team,i)=>{
-  let gründerKlasse = team.type==='gründer' ? ' team-founder' : '';
-  let icon = team.type==='gründer' ? '⭐ ' : '';
-  html+=`<div class="team${gründerKlasse}" onclick="oeffneGruppe(${i})"><b>${icon}${sichererText(team.name)}</b> (${team.members.length}/7)<br>Mitglieder: ${sichererText(team.members.join(', ')||'noch leer')} ${team.members.length>=7?' - VOLL':''}<br><small>► Klicken zum Öffnen</small></div>`;
- });
- document.getElementById('teams').innerHTML=html||'<p>Keine Teams - lade aus teams.json...</p>';
- if(offenerIndex!==null) oeffneGruppe(offenerIndex);
-}
-
-async function oeffneGruppe(i){
- offenerIndex=i;
- let teams = await ladeTeams();
- let t = teams[i];
- if(!t) return;
- let allein = t.members.length === 1;
- let ichBinDrin = aktuellerNutzer && t.members.includes(aktuellerNutzer);
- let darfUmbenennen = allein && ichBinDrin;
-
- let info = '<div class="small">Rationale Namen: Erlaubt sind klare Themen wie "Austausch", "Bau", "Wissen", "Hilfe". Blockiert: Heilversprechen.</div>';
-
- let umbenennHtml = darfUmbenennen ? `
-   <input id="neuerTeamName" placeholder="Neuer rationaler Name">
-   <button onclick="umbenennen
+<h1>VEREINTE MENSCHHEIT<br>NEXUS V1.3.1 - PROTOTYP<br>Das Herz das nie aufhört zu schlagen</h1>
+<p style="text-align:center" class="small">V1.3.1 FIX - Teams bleiben erhalten - Sof
