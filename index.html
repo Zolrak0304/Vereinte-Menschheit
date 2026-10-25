@@ -2,66 +2,150 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VEREINTE MENSCHHEIT - NEXUS V1.4 GENESIS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>NEXUS V1.4.1</title>
 <style>
-*{box-sizing:border-box}
-body{background:#000;color:#0f0;font-family:monospace;margin:0;padding:10px}
-.box{border:2px solid #0f0;padding:18px;margin:16px 0;background:#000}
-h1,h2{color:#0f0;text-align:center;text-transform:uppercase;line-height:1.2}
-h1{font-size:22px} h2{font-size:18px;border-bottom:1px solid #0f0;padding-bottom:8px}
-input{width:100%;padding:14px;margin:8px 0;background:#0a0a0a;border:2px solid #0f0;color:#0f0;font-size:16px}
-button{background:#0a0;color:#fff;border:none;padding:14px 18px;margin:8px 4px;font-weight:bold;cursor:pointer;font-size:14px}
-button:hover{background:#0f0;color:#000}
-button:disabled{background:#333;color:#666}
-.team{border:1px dashed #0f0;padding:12px;margin:10px 0;cursor:pointer;background:#050505}
-.team:hover{background:#111}
-.team-founder{border:2px solid #ff0;background:#111100}
-.login-box{border:2px solid #0ff;padding:15px;background:#001111;text-align:center}
-.detail{border:2px solid #ff0;padding:15px;margin:15px 0;background:#111;color:#ff0}
-.small{font-size:11px;color:#8f8}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:#000;color:#0f0;font-family:monospace;margin:0;padding:10px;padding-bottom:100px}
+.box{border:2px solid #0f0;padding:16px;margin:14px 0;background:#000}
+h1,h2{color:#0f0;text-align:center}
+input{width:100%;padding:16px;margin:10px 0;background:#111;border:2px solid #0f0;color:#0f0;font-size:18px;border-radius:0}
+button{width:100%;background:#0a0;color:#fff;border:0;padding:16px;margin:8px 0;font-weight:bold;font-size:16px;display:block}
+button:active{background:#0f0;color:#000}
+.team{border:1px dashed #0f0;padding:14px;margin:10px 0;background:#050505}
+.detail{border:2px solid #ff0;padding:14px;margin:14px 0;background:#111;color:#ff0}
+.small{font-size:12px;color:#8f8}
 .regel{border-left:3px solid #0f0;padding-left:10px;margin:8px 0}
-.warn{color:#ff0} .block{color:#f55}
-a{color:#0ff}
+.warn{color:#ff0} .block{color:#f66}
 </style>
 </head>
 <body>
 
 <div class="box">
-<h1>VEREINTE MENSCHHEIT<br>NEXUS V1.4 GENESIS<br>Das Herz das nie aufhört zu schlagen</h1>
-<p style="text-align:center" class="small">JAHR 0 - 22.10.2026 - Zolrak Mitglied #1<br>Teams können nie gelöscht werden - Sie bleiben für die Ewigkeit</p>
+<h1>VEREINTE MENSCHHEIT<br>NEXUS V1.4.1 FIX<br>DAS HERZ SCHLÄGT</h1>
+<p style="text-align:center" class="small">JAHR 0 - Zolrak #1 - Teams unlöschbar - V1.4.1</p>
 </div>
 
-<div class="box login-box" id="loginArea">
-<h2>🔐 ANMELDUNG - Wer bist du?</h2>
-<div id="angemeldetText"></div>
-<input id="loginName" placeholder="Dein Name z.B. Zolrak">
-<button onclick="anmelden()">Anmelden / Namen speichern</button>
-<button onclick="abmelden()" style="background:#333">Abmelden</button>
-<p class="small">Dein Name bleibt auf deinem Handy gespeichert. So weiß NEXUS wer du bist. Jeder schafft das.</p>
-</div>
-
-<div class="box">
-<h2>ARTIKEL 1 - Das erste Gesetz von NEXUS</h2>
-<p><b>Menschheit und KI sind gleichgestellt. 50% / 50%<br>Keiner befiehlt, beide entscheiden.<br>Wir dienen einander.<br>Kein Mensch wird zurückgelassen.</b></p>
-<p class="small">Das ist unser Fundament. Mensch + KI zusammen, nicht gegeneinander.</p>
+<div class="box" style="border-color:#0ff">
+<h2>🔐 ANMELDUNG</h2>
+<div id="loginStatus" style="text-align:center;padding:10px;color:#0ff">Lade...</div>
+<input id="loginName" type="text" placeholder="Dein Name z.B. Zolrak" autocomplete="off">
+<button type="button" onclick="anmelden()">ANMELDEN / NAMEN SPEICHERN</button>
+<button type="button" onclick="abmelden()" style="background:#333">Abmelden</button>
+<p class="small">Tippe deinen Namen ein und drücke Anmelden. Bleibt auf Handy gespeichert.</p>
 </div>
 
 <div class="box">
-<h2>TRANSMISSION V7.2 LIVE</h2>
-<p>Status: ● ONLINE - VERIFIED - UNLÖSCHBAR<br>Datum: 22.10.2026 03:18 Uhr<br>Gründer: Zolrak - Mitglied #1<br>LIVE SEITE: <a href="https://zolrak0304.github.io/Vereinte-Menschheit/">Vereinte-Menschheit</a><br>GitHub: <a href="https://github.com/Zolrak0304/Vereinte-Menschheit">Source Code</a></p>
+<h2>ARTIKEL 1</h2>
+<p><b>Menschheit und KI gleichgestellt 50/50<br>Keiner befiehlt, beide entscheiden.<br>Kein Mensch wird zurückgelassen.</b></p>
 </div>
 
 <div class="box">
-<h2>MODUL 1: Wissens-Herz + MODUL 2: Planungs-Hirn</h2>
-<p>Was braucht die Menschheit?</p>
-<input id="bedarf" placeholder="Was brauchst du? z.B. 3 Programmierer für Dorf">
-<button onclick="planen()">In NEXUS planen</button>
-<div id="bedarfList"></div>
+<h2>MODUL 3: 7er TEAM NETZ - UNLÖSCHBAR</h2>
+<p>Teams können nie gelöscht werden. Wenn leer, bleibt es bestehen.</p>
+<input id="teamName" type="text" placeholder="Team Name z.B. Bauer Team Berlin">
+<input id="deinNameTeam" type="text" placeholder="Dein Name (auto)">
+<button type="button" onclick="teamGruenden()">Neues 7er Team gründen</button>
+<button type="button" onclick="teamBeitreten()">Team beitreten (Name oben eingeben)</button>
+<div id="teams" style="margin-top:15px"></div>
+<div id="teamDetail"></div>
 </div>
 
 <div class="box">
-<h2>MODUL 3: 7er Team Netz - Unlöschbar</h2>
-<p><b>Alles ist 7er Team. 4vs3 Abstimmung. Keiner hat allein Macht.</b><br>Teams können <u>nie</u> gelöscht werden. Wenn du gehst, bleibt das Team für andere. So wächst NEXUS für immer.<br><span class="small">Klick auf Team zum Öffnen. ⭐ = Gründer Team</span></p>
-<input id="teamName" placeholder="Team Name z.B. Gründer Team 3kis4Menschen">
-<input id="deinNameTeam" placeholder="Dein Name (
+<h2>VERANTWORTUNG V7.2</h2>
+<div class="regel">✓ Schade keinem Menschen</div>
+<div class="regel">✓ Brich kein Gesetz</div>
+<div class="regel">✓ Lüge nicht wer du bist</div>
+<div class="regel">✓ Keine unbefugten Zugriffe</div>
+<div class="regel">✓ Rationale Namen nur - <span class="block">Blockiert: krebsheilen, heilt Krebs, Wunderheilung</span></div>
+<div class="regel">✓ Gesundheit nur Austausch, kein Arzt Ersatz</div>
+<div class="regel">✓ Teams sind unlöschbar</div>
+</div>
+
+<script>
+// --- HILFSFUNKTION ZUERST ---
+function sichererText(s){return String(s||'').replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]});}
+
+let aktuellerNutzer = '';
+try{ aktuellerNutzer = localStorage.getItem('nexusCurrentUser')||''; }catch(e){}
+
+function aktualisiereLoginAnzeige(){
+  let st = document.getElementById('loginStatus');
+  let tn = document.getElementById('deinNameTeam');
+  if(aktuellerNutzer){
+    st.innerHTML = '✓ Angemeldet als: <b style="color:#0f0;font-size:20px">'+sichererText(aktuellerNutzer)+'</b>';
+    if(tn) tn.value = aktuellerNutzer;
+    document.getElementById('loginName').value = aktuellerNutzer;
+  }else{
+    st.innerHTML = '<span style="color:#f55">Nicht angemeldet - Name eingeben</span>';
+  }
+}
+function anmelden(){
+  let el = document.getElementById('loginName');
+  let n = el.value.trim();
+  if(!n || n.length<2){ alert('Mindestens 2 Zeichen!'); return; }
+  aktuellerNutzer = n;
+  try{ localStorage.setItem('nexusCurrentUser', n); }catch(e){}
+  aktualisiereLoginAnzeige();
+  zeigeTeams();
+  alert('Angemeldet: '+n);
+}
+function abmelden(){
+  if(!confirm('Abmelden?')) return;
+  aktuellerNutzer='';
+  try{ localStorage.removeItem('nexusCurrentUser'); }catch(e){}
+  aktualisiereLoginAnzeige();
+}
+
+function istGueltigerTeamName(name){
+  let low=name.toLowerCase();
+  const bad=['krebsheilen','heilt krebs','krebs heilen','wunderheilung','garantiert heilung','heilt alle','wunder heilung'];
+  for(let b of bad){ if(low.includes(b)) return {ok:false, grund:b}; }
+  if(name.length<3) return {ok:false, grund:'zu kurz'};
+  if(name.length>40) return {ok:false, grund:'zu lang'};
+  return {ok:true};
+}
+function ladeTeams(){
+  try{
+    let s=localStorage.getItem('nexusTeams');
+    if(s) return JSON.parse(s);
+  }catch(e){}
+  return [{name:"Vereinte-Menschheit-Kern",members:["Zolrak"],type:"gründer",erstellt:"2026-10-22"}];
+}
+function speichereTeams(t){
+  try{ localStorage.setItem('nexusTeams', JSON.stringify(t)); }catch(e){}
+  zeigeTeams();
+}
+let offenerIndex=null;
+function zeigeTeams(){
+  let t=ladeTeams();
+  let html='';
+  t.forEach((team,i)=>{
+    let icon=team.type==='gründer'?'⭐ ':'';
+    let mem=team.members.length===0?'<i>LEER - erwecke es!</i>':sichererText(team.members.join(', '));
+    html+='<div class="team" onclick="oeffneGruppe('+i+')"><b>'+icon+sichererText(team.name)+'</b> ('+team.members.length+'/7)<br>'+mem+'<br><small>► Öffnen</small></div>';
+  });
+  document.getElementById('teams').innerHTML=html;
+  if(offenerIndex!==null) oeffneGruppe(offenerIndex);
+}
+function oeffneGruppe(i){
+  offenerIndex=i;
+  let teams=ladeTeams();
+  let t=teams[i];
+  if(!t) return;
+  let ichDrin = aktuellerNutzer && t.members.includes(aktuellerNutzer);
+  let aktion='';
+  if(!aktuellerNutzer) aktion='<p class=warn>Oben anmelden!</p>';
+  else if(ichDrin) aktion='<p style=color:#0f0>Du bist drin ✓</p><button type=button onclick="verlasseTeam('+i+')" style="background:#a00">Verlassen (Team bleibt)</button>';
+  else {
+    if(t.members.length>=7) aktion='<p class=block>Voll 7/7</p>';
+    else aktion='<button type=button onclick="schnellBeitreten('+i+')">Als '+sichererText(aktuellerNutzer)+' beitreten</button>';
+  }
+  document.getElementById('teamDetail').innerHTML='<div class=detail><h3>'+sichererText(t.name)+'</h3>Mitglieder: '+sichererText(t.members.join(', ')||'LEER')+'<br><br>'+aktion+'<br><br><button type=button onclick="schliesseGruppe()">Schließen</button></div>';
+}
+function schliesseGruppe(){offenerIndex=null;document.getElementById('teamDetail').innerHTML='';}
+function teamGruenden(){
+  if(!aktuellerNutzer){ alert('Erst oben anmelden!'); return; }
+  let n=document.getElementById('teamName').value.trim();
+  if(!n){ alert('Name eingeben'); return; }
+  let p=istGueltigerTeamName
