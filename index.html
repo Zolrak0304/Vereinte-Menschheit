@@ -3,84 +3,82 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NEXUS V1.9.8</title>
+<title>NEXUS V1.9.9</title>
 <style>
 body{background:#000;color:#0f0;font-family:monospace;margin:0;padding:10px}
 .box{border:3px solid #0f0;padding:12px;margin:10px 0;background:#000}
 input{width:100%;padding:18px;margin:8px 0;background:#111;border:2px solid #0f0;color:#0f0;font-size:18px;box-sizing:border-box}
 button{width:100%;padding:18px;margin:6px 0;font-weight:bold;font-size:18px;border:none}
 #status{font-size:19px;text-align:center;padding:12px;border:3px solid #0ff}
-.team{border:2px solid #0f0;padding:10px;margin:6px 0;cursor:pointer}
+.team{border:2px solid #0f0;padding:10px;margin:6px 0}
 </style>
 </head>
 <body>
 
 <div class="box" style="border-color:#0ff">
-<h2 style="text-align:center">🔐 ANMELDUNG V1.9.8 - SICHER</h2>
-<div id="status" style="color:#f88;background:#200">NICHT ANGEMELDET - Bitte anmelden</div>
-<input id="name" placeholder="Name z.B. Zolrak">
+<h2 style="text-align:center">🔐 ANMELDUNG V1.9.9 - FIX</h2>
+<div id="status" style="color:#f88;background:#200">NICHT ANGEMELDET</div>
+<input id="name" placeholder="Name">
 <input id="pass1" type="password" placeholder="Passwort">
-<input id="pass2" type="password" placeholder="Passwort bestätigen (nur bei neu)">
+<input id="pass2" type="password" placeholder="Passwort bestätigen">
 <button onclick="doLogin()" style="background:#0f0;color:#000">ANMELDEN / REGISTRIEREN</button>
 <button onclick="doZolrak()" style="background:#0ff;color:#000">DIREKT ALS ZOLRAK</button>
 <button onclick="doLogout()" style="background:#333;color:#fff">ABMELDEN</button>
-<button onclick="doDeleteAll()" style="background:#800;color:#fff;border:2px solid #f00">⚠️ ALLES LÖSCHEN - Account + Teams verlassen</button>
+<button onclick="doDelete()" style="background:#800;color:#fff;border:2px solid red">⚠️ ALLES LÖSCHEN</button>
 </div>
 
-<div class="box"><h1 style="text-align:center;margin:0">VEREINTE MENSCHHEIT V1.9.8</h1><p id="myInfo" style="text-align:center;font-size:12px"></p></div>
-
+<div class="box"><h1 style="text-align:center;margin:0">VEREINTE MENSCHHEIT V1.9.9</h1><p id="myInfo" style="text-align:center;font-size:12px"></p></div>
 <div class="box"><h2 style="text-align:center">TEAMS (1-7 pro Team, max 3 pro Person)</h2><input id="teamName" placeholder="Team Name"><button onclick="doCreateTeam()" style="background:#0a0;color:#fff">Team gründen</button><div id="teamListe"></div></div>
-
 <div id="teamDetail"></div>
 
 <script>
 var users = {}; var teams = []; var meinName = "";
-try{ users = JSON.parse(localStorage.getItem('NEXUS_V8_USERS')||'{}'); }catch(e){ users={}; }
-try{ teams = JSON.parse(localStorage.getItem('NEXUS_V8_TEAMS')||'[{"name":"Nahrung","members":["Zolrak"],"msgs":["Zolrak: Jahr 0 - Nahrung sichern"]}]'); }catch(e){ teams=[{name:"Nahrung",members:["Zolrak"],msgs:["Zolrak: Jahr 0"]}]; }
-// WICHTIG: meinName wird NICHT aus Speicher geladen - sicher!
+try{
+  var u = localStorage.getItem('N9_USERS'); if(u) users = JSON.parse(u);
+}catch(e){ users={}; }
+try{
+  var t = localStorage.getItem('N9_TEAMS'); if(t) teams = JSON.parse(t); else teams = [{name:"Nahrung",members:["Zolrak"],msgs:["Zolrak: Jahr 0"]}];
+}catch(e){ teams=[{name:"Nahrung",members:["Zolrak"],msgs:["Zolrak: Jahr 0"]}]; }
 
-function save(){ localStorage.setItem('NEXUS_V8_USERS', JSON.stringify(users)); localStorage.setItem('NEXUS_V8_TEAMS', JSON.stringify(teams)); }
-function countTeams(){ var c=0; for(var i=0;i<teams.length;i++){ if(teams[i].members.indexOf(meinName)!==-1) c++; } return c; }
+function save(){ localStorage.setItem('N9_USERS', JSON.stringify(users)); localStorage.setItem('N9_TEAMS', JSON.stringify(teams)); }
+function countTeams(){ var c=0; for(var i=0;i<teams.length;i++){ if(teams[i].members && teams[i].members.indexOf(meinName)!==-1) c++; } return c; }
+function updateStatus(){ var s=document.getElementById('status'); if(meinName){ s.innerHTML="✓ ANGEMELDET: "+meinName+" | Teams "+countTeams()+"/3"; s.style.color="#0f0"; s.style.background="#020"; }else{ s.innerHTML="NICHT ANGEMELDET - Bitte anmelden"; s.style.color="#f88"; s.style.background="#200"; } }
 
 function doLogin(){
-  var n=document.getElementById('name').value.trim(); var p1=document.getElementById('pass1').value.trim(); var p2=document.getElementById('pass2').value.trim();
-  if(n.length<2){ alert("Name zu kurz"); return; } if(p1.length<3){ alert("Passwort mind 3 Zeichen"); return; }
-  if(users[n]){ if(users[n]!==p1){ alert("FALSCHES PASSWORT für "+n); return; } meinName=n; alert("LOGIN OK als "+n); }
-  else{ if(p1!==p2){ alert("Passwörter nicht gleich"); return; } users[n]=p1; meinName=n; alert("ERSTELLT! "+n); }
-  save(); updateStatus(); zeigeTeams();
+  try{
+    var n=document.getElementById('name').value.trim();
+    var p1=document.getElementById('pass1').value.trim();
+    var p2=document.getElementById('pass2').value.trim();
+    if(n.length<2){ alert("Name zu kurz"); return; }
+    if(p1.length<3){ alert("Passwort mind 3 Zeichen"); return; }
+    if(users[n]){
+      if(users[n]!==p1){ alert("FALSCHES PASSWORT für "+n); return; }
+      meinName=n; save(); updateStatus(); zeigeTeams(); alert("LOGIN OK als "+n);
+    }else{
+      if(p1!==p2){ alert("Passwörter nicht gleich"); return; }
+      users[n]=p1; meinName=n; save(); updateStatus(); zeigeTeams(); alert("ERSTELLT! "+n);
+    }
+  }catch(e){ alert("Fehler: "+e.message); }
 }
 function doZolrak(){
-  var n="Zolrak"; var p1=document.getElementById('pass1').value.trim();
-  if(!users[n]){ alert("Zolrak existiert noch nicht - erst oben als Zolrak registrieren mit Passwort erstellen + bestätigen"); return; }
-  if(users[n]!==p1){ alert("Falsches Passwort für Zolrak!"); return; }
-  meinName=n; updateStatus(); zeigeTeams(); alert("DIREKT ALS ZOLRAK - OK!");
+  try{
+    var p=document.getElementById('pass1').value.trim();
+    if(!users["Zolrak"]){ alert("Zolrak existiert nicht - erst als Zolrak registrieren"); return; }
+    if(users["Zolrak"]!==p){ alert("Falsches Passwort für Zolrak"); return; }
+    meinName="Zolrak"; updateStatus(); zeigeTeams(); alert("DIREKT ALS ZOLRAK OK");
+  }catch(e){ alert(e.message); }
 }
-function doLogout(){
-  meinName=""; updateStatus(); zeigeTeams(); alert("Abgemeldet - Teams bleiben erhalten");
-}
-function doDeleteAll(){
-  if(!meinName){ alert("Erst anmelden!"); return; }
-  if(!confirm("WIRKLICH ALLES LÖSCHEN? \n\n- Account "+meinName+" wird gelöscht\n- Du verlässt alle Teams\n- Chat bleibt aber Mitgliedschaft weg\n\nSicher?")) return;
-  // Aus allen Teams entfernen
-  for(var i=0;i<teams.length;i++){ 
-    var idx=teams[i].members.indexOf(meinName); 
-    if(idx!==-1){ teams[i].members.splice(idx,1); teams[i].msgs.push(meinName+" hat ALLES GELÖSCHT und Team verlassen - Jahr 0"); }
-  }
-  // Teams mit 0 Mitgliedern löschen?
+function doLogout(){ meinName=""; updateStatus(); zeigeTeams(); alert("Abgemeldet"); }
+function doDelete(){
+  if(!meinName){ alert("Erst anmelden"); return; }
+  if(!confirm("Wirklich ALLES LÖSCHEN? Account "+meinName+" + aus allen Teams?")) return;
+  for(var i=0;i<teams.length;i++){ var idx=teams[i].members.indexOf(meinName); if(idx!==-1){ teams[i].members.splice(idx,1); teams[i].msgs.push(meinName+" hat ALLES gelöscht"); } }
   teams = teams.filter(function(t){ return t.members.length>0; });
-  delete users[meinName];
-  save();
-  meinName=""; updateStatus(); zeigeTeams(); alert("Alles gelöscht!");
-}
-
-function updateStatus(){
-  var st=document.getElementById('status');
-  if(meinName){ st.innerHTML="✓ ANGEMELDET: "+meinName+" | Teams "+countTeams()+"/3"; st.style.color="#0f0"; st.style.background="#020"; }
-  else{ st.innerHTML="NICHT ANGEMELDET - Bitte anmelden"; st.style.color="#f88"; st.style.background="#200"; }
+  if(teams.length===0) teams=[{name:"Nahrung",members:["Zolrak"],msgs:["Zolrak: Jahr 0"]}];
+  delete users[meinName]; meinName=""; save(); updateStatus(); zeigeTeams(); alert("Alles gelöscht");
 }
 function doCreateTeam(){
-  if(!meinName){ alert("Erst anmelden"); return; } var t=document.getElementById('teamName').value.trim(); if(t.length<3){ alert("Mind 3 Zeichen"); return; }
-  if(countTeams()>=3){ alert("Du bist schon in 3 Teams! Max 3!"); return; } for(var i=0;i<teams.length;i++){ if(teams[i].name.toLowerCase()===t.toLowerCase()){ alert("Team existiert"); return; } }
-  teams.push({name:t, members:[meinName], msgs:[meinName+": Team "+t+" gegründet"]}); document.getElementById('teamName').value=""; save(); zeigeTeams();
-}
-function zeigeTeams(){ var div=document.getElementById('teamListe'); var html=""; for(var
+  if(!meinName){ alert("Erst anmelden"); return; }
+  var tn=document.getElementById('teamName').value.trim(); if(tn.length<3){ alert("Mind 3 Zeichen"); return; }
+  if(countTeams()>=3){ alert("Max 3 Teams!"); return; }
+  for(var i=0;i<teams.length;i++){ if(teams[i].name.toLowerCase()===tn
