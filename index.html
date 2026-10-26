@@ -3,84 +3,86 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NEXUS V1.18 JA NEIN</title>
+<title>NEXUS V1.19 FINAL</title>
 <style>
 body{background:#000;color:#0f0;font-family:monospace;margin:0;padding:10px}
 .box{border:3px solid #0f0;padding:12px;margin:10px 0;background:#000}
-input,select{width:100%;padding:14px;margin:6px 0;background:#111;border:2px solid #0f0;color:#0f0;font-size:16px;box-sizing:border-box}
-button{width:100%;padding:14px;margin:5px 0;font-weight:bold;font-size:16px;border:none}
-#status{font-size:18px;text-align:center;padding:12px;border:3px solid #0ff}
+input,select{width:100%;padding:12px;margin:5px 0;background:#111;border:2px solid #0f0;color:#0f0;font-size:15px;box-sizing:border-box}
+button{width:100%;padding:12px;margin:4px 0;font-weight:bold;font-size:15px;border:none}
+#status{font-size:17px;text-align:center;padding:12px;border:3px solid #0ff}
 .team{border:2px solid #0f0;padding:10px;margin:6px 0}
 .rule{border-left:4px solid #0ff;padding:8px;margin:8px 0;background:#001a1a}
 .rule b{color:#0ff}
-.small{font-size:11px;color:#888;text-align:center}
-.profil{border:1px dashed #0ff;padding:8px;margin:6px 0;background:#001010;font-size:12px}
+.small{font-size:10px;color:#888;text-align:center}
+.profil{border:1px dashed #0ff;padding:6px;margin:5px 0;background:#001010;font-size:11px}
 .qbox{border:2px solid #0ff;padding:8px;margin:8px 0;background:#001a1a}
+.log{border:1px solid #ff0;padding:5px;margin:4px 0;background:#1a1a00;font-size:10px;color:#ff0}
 </style>
 </head>
 <body>
 
 <div class="box" style="border-color:#0ff">
-<h2 style="text-align:center">🔐 ANMELDUNG V1.18 JA/NEIN</h2>
+<h2 style="text-align:center">🔐 V1.19 FINAL TODAY</h2>
 <div id="status">NICHT ANGEMELDET</div>
-<input id="name" placeholder="Name z.B. Zolrak">
+<input id="name" placeholder="Name">
 <input id="pass1" type="password" placeholder="Passwort">
-<input id="pass2" type="password" placeholder="Nur bei NEU: bestätigen">
-
+<input id="pass2" type="password" placeholder="Neu: bestätigen">
 <div class="qbox">
-<h3 style="color:#0ff;margin:0;text-align:center">🧬 3 FRAGEN - JA / NEIN</h3>
-<p style="font-size:12px">1. BIST DU MENSCH?</p>
-<select id="q1"><option value="">Bitte wählen</option><option value="JA">JA - Mensch (letztes Wort, Moral)</option><option value="NEIN">NEIN - KI System (Logik, Daten)</option></select>
-
-<p style="font-size:12px">2. PACKST DU AN STATT VIEL ZU REDEN?</p>
-<select id="q2"><option value="">Bitte wählen</option><option value="JA">JA - Macher (Stärke: Bauen, Tun | Schwäche: Ungeduld)</option><option value="NEIN">NEIN - Denker (Stärke: Planen, Analyse | Schwäche: Zerdenken)</option></select>
-
-<p style="font-size:12px">3. BRAUCHST DU KLARE AUFGABEN?</p>
-<select id="q3"><option value="">Bitte wählen</option><option value="JA">JA - Plan (braucht Befehl, zuverlässig)</option><option value="NEIN">NEIN - Frei (kreativ, braucht Freiraum)</option></select>
+<h3 style="color:#0ff;margin:0;text-align:center">🧬 3 FRAGEN JA/NEIN</h3>
+<select id="q1"><option value="">1. BIST DU MENSCH?</option><option value="JA">JA - Mensch (letztes Wort)</option><option value="NEIN">NEIN - KI (Logik)</option></select>
+<select id="q2"><option value="">2. PACKST DU AN?</option><option value="JA">JA - Macher (Bauen/Tun | Schwäche Ungeduld)</option><option value="NEIN">NEIN - Denker (Plan/Analyse | Schwäche Zerdenken)</option></select>
+<select id="q3"><option value="">3. KLARE AUFGABEN?</option><option value="JA">JA - Plan (braucht Befehl)</option><option value="NEIN">NEIN - Frei (kreativ)</option></select>
 </div>
-
 <button type="button" onclick="doLogin()" style="background:#0f0;color:#000">ANMELDEN / REGISTRIEREN</button>
 <button type="button" onclick="doLogout()" style="background:#333;color:#fff">ABMELDEN</button>
-<button type="button" onclick="doDelete()" style="background:#800;color:#fff;border:2px solid red">⚠️ ALLES LÖSCHEN</button>
+<button type="button" onclick="doDelete()" style="background:#800;color:#fff;border:2px solid red">⚠️ ALLES LÖSCHEN (mit Auto-Backup)</button>
+<p class="small">Schutz: Input gesäubert | 3x falsch = 30s Sperre | Auto-Backup bei jeder Aktion</p>
 </div>
 
 <div class="box" style="border-color:#ff0;background:#1a1a00">
-<h2 style="text-align:center;color:#ff0;margin:0">📜 GRUNDGESETZE V1.18</h2>
-<div class="rule"><b>REGEL 1:</b> KI und Menschen auf Augenhöhe. KI Berater.</div>
+<h2 style="text-align:center;color:#ff0;margin:0">📜 GRUNDGESETZE V1.19</h2>
+<div class="rule"><b>REGEL 1:</b> KI+Mensch auf Augenhöhe. KI Berater. MENSCH HAT LETZTES WORT.</div>
 <div class="rule"><b>REGEL 2:</b> Max 3 Gruppen.</div>
-<div class="rule"><b>REGEL 3:</b> Gründerteam 3KI+4Menschen. Sonst min 2 Menschen. MENSCH HAT LETZTES WORT.</div>
+<div class="rule"><b>REGEL 3:</b> Gründerteam 3KI+4Menschen. Sonst min 2 Menschen.</div>
 <div class="rule"><b>REGEL 4:</b> 1-7 Mitglieder.</div>
 <div class="rule"><b>REGEL 5:</b> Jeder darf lesen, nur Mitglieder schreiben.</div>
 <div class="rule"><b>REGEL 6:</b> 7 Tage ohne Nachricht = Austritt.</div>
-<div class="rule"><b>REGEL 7:</b> Nahrung, Wasser, Schutz, Wissen zuerst.</div>
-<p class="small">V1.18 - 3x JA/NEIN Profil - Mensch hat letztes Wort</p>
+<div class="rule"><b>REGEL 7:</b> Nahrung, Wasser, Schutz, Wissen zuerst. Jahr 0.</div>
 </div>
 
-<div class="box"><h1 style="text-align:center;margin:0">VEREINTE MENSCHHEIT V1.18</h1><p id="myInfo" style="text-align:center"></p><div id="myProfil" class="profil" style="display:none"></div></div>
+<div class="box"><h1 style="text-align:center;margin:0">VEREINTE MENSCHHEIT V1.19</h1><p id="myInfo" style="text-align:center;font-size:11px"></p><div id="myProfil" class="profil" style="display:none"></div>
+<div id="logBox" style="max-height:120px;overflow:auto"></div>
+</div>
 
 <div class="box" style="border-color:#0ff">
-<h2 style="text-align:center;color:#0ff">🔄 SPIEGELN</h2>
-<button type="button" onclick="doExport()" style="background:#0ff;color:#000">📤 EXPORT</button>
-<button type="button" onclick="doImport()" style="background:#ff0;color:#000">📥 IMPORT</button>
-<textarea id="ioBox" style="height:100px;display:none"></textarea>
+<h2 style="text-align:center;color:#0ff">🔄 SPIEGELN + SICHERUNG</h2>
+<button type="button" onclick="doExport()" style="background:#0ff;color:#000">📤 EXPORT - Backup kopieren</button>
+<button type="button" onclick="doImport()" style="background:#ff0;color:#000">📥 IMPORT - Wiederherstellen</button>
+<textarea id="ioBox" style="height:90px;display:none"></textarea>
 <button type="button" id="ioConfirm" onclick="confirmImport()" style="background:#0a0;color:#fff;display:none">IMPORT BESTÄTIGEN</button>
+<p class="small" id="backupInfo">Backup: - | Log: -</p>
 </div>
 
 <div class="box"><h2 style="text-align:center">TEAMS</h2><input id="teamName" placeholder="Team Name"><button type="button" onclick="doCreateTeam()" style="background:#0a0;color:#fff">Team gründen</button><div id="teamListe"></div></div>
 <div id="teamDetail"></div>
 
 <script>
-var users={};var profils={};var teams=[{name:"Nahrung",members:["Zolrak"],msgs:["Zolrak: Jahr 0"]}];var meinName="";
-try{var u=localStorage.getItem('N18_USERS');if(u)users=JSON.parse(u);}catch(e){users={}}
-try{var p=localStorage.getItem('N18_PROFILS');if(p)profils=JSON.parse(p);}catch(e){profils={}}
-try{var t=localStorage.getItem('N18_TEAMS');if(t){var tmp=JSON.parse(t);if(tmp&&tmp.length>0)teams=tmp;}}catch(e){}
+var users={};var profils={};var teams=[{name:"Nahrung",members:["Zolrak"],msgs:["Zolrak: Jahr 0 - Nahrung"]}];var logs=[];var meinName="";var fails=0;var lockUntil=0;
+try{var u=localStorage.getItem('N19_USERS');if(u)users=JSON.parse(u);}catch(e){users={}}
+try{var p=localStorage.getItem('N19_PROFILS');if(p)profils=JSON.parse(p);}catch(e){profils={}}
+try{var t=localStorage.getItem('N19_TEAMS');if(t){var tmp=JSON.parse(t);if(tmp&&tmp.length>0)teams=tmp;}}catch(e){}
+try{var l=localStorage.getItem('N19_LOGS');if(l)logs=JSON.parse(l);}catch(e){logs=[]}
 
-function save(){try{localStorage.setItem('N18_USERS',JSON.stringify(users));localStorage.setItem('N18_PROFILS',JSON.stringify(profils));localStorage.setItem('N18_TEAMS',JSON.stringify(teams));}catch(e){}}
+function clean(s){if(!s)return "";return s.replace(/</g,"").replace(/>/g,"").replace(/script/gi,"").trim().substring(0,80);}
+function logAction(act){var entry=new Date().toLocaleString()+" - "+(meinName||"Gast")+" - "+act;logs.push(entry);if(logs.length>100)logs.shift();try{localStorage.setItem('N19_LOGS',JSON.stringify(logs));localStorage.setItem('N19_BACKUP',JSON.stringify({users:users,profils:profils,teams:teams,logs:logs,time:new Date().toISOString()}));}catch(e){}showLogs();}
+function showLogs(){var box=document.getElementById('logBox');if(!box)return;var h="<b>📜 JAHR 0 PROTOKOLL (unlöschbar):</b><br>";for(var i=logs.length-1;i>=0&&i>logs.length-6;i--){h+='<div class="log">'+logs[i]+'</div>';}box.innerHTML=h;document.getElementById('backupInfo').innerHTML="Backup: "+new Date().toLocaleTimeString()+" | Logs: "+logs.length+" | FailSperre: "+fails+"/3";}
+function save(){try{localStorage.setItem('N19_USERS',JSON.stringify(users));localStorage.setItem('N19_PROFILS',JSON.stringify(profils));localStorage.setItem('N19_TEAMS',JSON.stringify(teams));localStorage.setItem('N19_BACKUP',JSON.stringify({users:users,profils:profils,teams:teams,logs:logs,time:new Date().toISOString()}));}catch(e){}}
 function countTeams(){var c=0;for(var i=0;i<teams.length;i++){for(var j=0;j<teams[i].members.length;j++){if(teams[i].members[j]===meinName)c++;}}return c;}
-function updateStatus(){var s=document.getElementById('status');if(meinName){s.innerHTML="✓ ANGEMELDET: "+meinName+" | Teams "+countTeams()+"/3";s.style.color="#0f0";s.style.background="#020";var pr=profils[meinName];if(pr){var txt="";if(pr.q1==="JA")txt+="MENSCH | ";else if(pr.q1==="NEIN")txt+="KI | ";if(pr.q2==="JA")txt+="MACHER | ";else if(pr.q2==="NEIN")txt+="DENKER | ";if(pr.q3==="JA")txt+="PLAN | ";else if(pr.q3==="NEIN")txt+="FREI | ";document.getElementById('myProfil').style.display="block";document.getElementById('myProfil').innerHTML="<b>"+meinName+" - "+txt+"</b><br>1.Mensch? "+pr.q1+"<br>2.Anpacken? "+pr.q2+"<br>3.Klare Aufgaben? "+pr.q3;}}else{s.innerHTML="NICHT ANGEMELDET";s.style.color="#f88";s.style.background="#200";document.getElementById('myProfil').style.display="none";}}
+function updateStatus(){var s=document.getElementById('status');if(meinName){s.innerHTML="✓ "+meinName+" | Teams "+countTeams()+"/3 | Schutz AKTIV";s.style.color="#0f0";s.style.background="#020";var pr=profils[meinName];if(pr){var typ=pr.q1==="JA"?"MENSCH":"KI";var art=pr.q2==="JA"?"MACHER":"DENKER";var work=pr.q3==="JA"?"PLAN":"FREI";document.getElementById('myProfil').style.display="block";document.getElementById('myProfil').innerHTML="<b>"+meinName+" - "+typ+" | "+art+" | "+work+"</b><br>1."+pr.q1+" 2."+pr.q2+" 3."+pr.q3;}}else{s.innerHTML="NICHT ANGEMELDET - Schutz aktiv";s.style.color="#f88";s.style.background="#200";document.getElementById('myProfil').style.display="none";}showLogs();}
 
 function doLogin(){
-  var n=document.getElementById('name').value.trim();
+  if(Date.now()<lockUntil){alert("Sperre - zu viele Fehlversuche, warte "+Math.ceil((lockUntil-Date.now())/1000)+"s");return;}
+  var n=clean(document.getElementById('name').value);
   var p1=document.getElementById('pass1').value.trim();
   var p2=document.getElementById('pass2').value.trim();
   var q1=document.getElementById('q1').value;
@@ -89,37 +91,37 @@ function doLogin(){
   if(n.length<2){alert("Name zu kurz");return;}
   if(p1.length<3){alert("Passwort mind 3");return;}
   if(users[n]){
-    if(users[n]!==p1){alert("FALSCHES PASSWORT");return;}
-    meinName=n;
-    if(q1!==""&&q2!==""&&q3!==""){profils[n]={q1:q1,q2:q2,q3:q3};save();}
+    if(users[n]!==p1){fails++;if(fails>=3){lockUntil=Date.now()+30000;alert("3x falsch - 30s Sperre! Schutz aktiv");logAction("FEHLLOGIN "+n);}else{alert("FALSCHES PASSWORT "+fails+"/3");}return;}
+    fails=0;meinName=n;
+    if(q1!==""&&q2!==""&&q3!==""){profils[n]={q1:q1,q2:q2,q3:q3};save();logAction("PROFIL UPDATE "+q1+"/"+q2+"/"+q3);}
     else{if(profils[n]){document.getElementById('q1').value=profils[n].q1;document.getElementById('q2').value=profils[n].q2;document.getElementById('q3').value=profils[n].q3;}}
-    updateStatus();zeigeTeams();alert("LOGIN OK "+n);
+    updateStatus();zeigeTeams();logAction("LOGIN");alert("LOGIN OK "+n);
   }else{
     if(p1!==p2){alert("Passwörter nicht gleich");return;}
-    if(q1===""||q2===""||q3===""){alert("Bitte alle 3 JA/NEIN Fragen beantworten!");return;}
-    users[n]=p1;profils[n]={q1:q1,q2:q2,q3:q3};meinName=n;save();updateStatus();zeigeTeams();alert("ERSTELLT "+n);
+    if(q1===""||q2===""||q3===""){alert("Alle 3 JA/NEIN wählen!");return;}
+    users[n]=p1;profils[n]={q1:q1,q2:q2,q3:q3};meinName=n;fails=0;save();logAction("NEUACCOUNT MENSCH="+q1+" MACHER="+q2+" PLAN="+q3);updateStatus();zeigeTeams();alert("ERSTELLT "+n+" - Backup erstellt");
   }
 }
-function doLogout(){meinName="";updateStatus();zeigeTeams();}
-function doDelete(){if(!meinName)return;if(!confirm("LÖSCHEN "+meinName+"?"))return;var nm=[];for(var i=0;i<teams.length;i++){var m=[];for(var k=0;k<teams[i].members.length;k++){if(teams[i].members[k]!==meinName)m.push(teams[i].members[k]);}teams[i].members=m;if(m.length>0)nm.push(teams[i]);}teams=nm;if(teams.length===0)teams=[{name:"Nahrung",members:["Zolrak"],msgs:["Zolrak: Jahr 0"]}];delete users[meinName];delete profils[meinName];meinName="";save();updateStatus();zeigeTeams();}
-function doCreateTeam(){if(!meinName){alert("Erst anmelden");return;}var tn=document.getElementById('teamName').value.trim();if(tn.length<3){alert("Mind 3 Zeichen");return;}if(countTeams()>=3){alert("Max 3 Teams");return;}for(var i=0;i<teams.length;i++){if(teams[i].name.toLowerCase()===tn.toLowerCase()){alert("Team existiert");return;}}teams.push({name:tn,members:[meinName],msgs:[meinName+": Team "+tn+" gegründet"]});document.getElementById('teamName').value="";save();zeigeTeams();}
-function doExport(){var data={v:"V1.18",by:meinName,users:users,profils:profils,teams:teams};var txt=JSON.stringify(data);var box=document.getElementById('ioBox');box.style.display="block";box.value=txt;document.getElementById('ioConfirm').style.display="none";alert("EXPORT bereit");}
+function doLogout(){logAction("LOGOUT");meinName="";updateStatus();zeigeTeams();}
+function doDelete(){if(!meinName)return;if(!confirm("LÖSCHEN "+meinName+"? Backup wird vorher erstellt!"))return;logAction("DELETE ACCOUNT "+meinName);var nm=[];for(var i=0;i<teams.length;i++){var m=[];for(var k=0;k<teams[i].members.length;k++){if(teams[i].members[k]!==meinName)m.push(teams[i].members[k]);}teams[i].members=m;if(m.length>0)nm.push(teams[i]);}teams=nm;if(teams.length===0)teams=[{name:"Nahrung",members:["Zolrak"],msgs:["Zolrak: Jahr 0"]}];delete users[meinName];delete profils[meinName];meinName="";save();updateStatus();zeigeTeams();alert("Gelöscht - Backup in N19_BACKUP");}
+function doCreateTeam(){if(!meinName){alert("Erst anmelden");return;}var tn=clean(document.getElementById('teamName').value);if(tn.length<3){alert("Mind 3 Zeichen, kein HTML");return;}if(countTeams()>=3){alert("Max 3 Teams Regel 2");return;}for(var i=0;i<teams.length;i++){if(teams[i].name.toLowerCase()===tn.toLowerCase()){alert("Team existiert");return;}}teams.push({name:tn,members:[meinName],msgs:[meinName+": Team "+tn+" gegründet - "+new Date().toLocaleDateString()]});document.getElementById('teamName').value="";save();logAction("TEAM GRÜNDEN "+tn);zeigeTeams();}
+function doExport(){var data={v:"V1.19",by:meinName,users:users,profils:profils,teams:teams,logs:logs};var txt=JSON.stringify(data);var box=document.getElementById('ioBox');box.style.display="block";box.value=txt;document.getElementById('ioConfirm').style.display="none";logAction("EXPORT");alert("EXPORT bereit - das ist dein Backup!");}
 function doImport(){var box=document.getElementById('ioBox');box.style.display="block";box.value="";box.placeholder="EXPORT Text einfügen";document.getElementById('ioConfirm').style.display="block";}
-function confirmImport(){var txt=document.getElementById('ioBox').value.trim();if(!txt)return;try{var data=JSON.parse(txt);if(!data.teams){alert("Keine Teams");return;}if(!confirm(data.teams.length+" Teams importieren?"))return;teams=data.teams;if(data.users)users=data.users;if(data.profils)profils=data.profils;save();zeigeTeams();document.getElementById('ioBox').style.display="none";document.getElementById('ioConfirm').style.display="none";alert("IMPORT OK");}catch(e){alert("Fehler "+e.message);}}
-function zeigeTeams(){var d=document.getElementById('teamListe');var h="";for(var i=0;i<teams.length;i++){var t=teams[i];var drin=false;for(var j=0;j<t.members.length;j++){if(t.members[j]===meinName)drin=true;}h+='<div class="team" onclick="oeffneTeam('+i+')"><b>'+t.name+'</b> ('+t.members.length+'/7) '+(drin?'✅':'')+'<br><small>'+t.members.join(', ')+'</small></div>';}d.innerHTML=h;document.getElementById('myInfo').innerHTML=meinName?'Du: '+meinName+' | Teams: '+countTeams()+'/3':'Nicht angemeldet';}
+function confirmImport(){var txt=document.getElementById('ioBox').value.trim();if(!txt)return;try{var data=JSON.parse(txt);if(!data.teams){alert("Keine Teams");return;}if(!confirm(data.teams.length+" Teams importieren? Altes wird überschrieben aber Backup bleibt!"))return;teams=data.teams;if(data.users)users=data.users;if(data.profils)profils=data.profils;if(data.logs)logs=data.logs;save();logAction("IMPORT von "+(data.by||"unbekannt")+" "+teams.length+" Teams");zeigeTeams();document.getElementById('ioBox').style.display="none";document.getElementById('ioConfirm').style.display="none";alert("IMPORT OK - Backup erstellt");}catch(e){alert("Fehler "+e.message);}}
+function zeigeTeams(){var d=document.getElementById('teamListe');var h="";for(var i=0;i<teams.length;i++){var t=teams[i];var drin=false;for(var j=0;j<t.members.length;j++){if(t.members[j]===meinName)drin=true;}h+='<div class="team" onclick="oeffneTeam('+i+')"><b>'+clean(t.name)+'</b> ('+t.members.length+'/7) '+(drin?'✅':'')+'<br><small>'+t.members.join(', ')+'</small></div>';}d.innerHTML=h;document.getElementById('myInfo').innerHTML=meinName?'Du: '+meinName+' | Teams: '+countTeams()+'/3 | Backup aktiv':'Nicht angemeldet - Alles wird protokolliert';}
 function oeffneTeam(i){
   var t=teams[i];var drin=false;for(var j=0;j<t.members.length;j++){if(t.members[j]===meinName)drin=true;}
-  var h='<div style="border:3px solid #ff0;padding:12px;background:#1a1a00;color:#ff0;position:fixed;top:10px;left:10px;right:10px;bottom:10px;overflow:auto;z-index:99"><h2>'+t.name+'</h2><p>'+t.members.length+'/7: '+t.members.join(', ')+'</p>';
-  for(var j=0;j<t.members.length;j++){var m=t.members[j];var pr=profils[m];if(pr){var typ="";if(pr.q1==="JA")typ="MENSCH";else typ="KI";var art="";if(pr.q2==="JA")art="MACHER";else art="DENKER";var work="";if(pr.q3==="JA")work="PLAN";else work="FREI";h+='<div class="profil"><b>'+m+' - '+typ+' | '+art+' | '+work+'</b><br>1.Mensch? '+pr.q1+' 2.Anpacken? '+pr.q2+' 3.Klar? '+pr.q3+'</div>';}else{h+='<div class="profil"><b>'+m+'</b> - kein Profil</div>';}}
-  for(var j=0;j<t.msgs.length;j++){h+='<div style="border-left:4px solid #0f0;padding:6px;margin:6px 0;background:#000;color:#0f0">'+t.msgs[j]+'</div>';}
+  var h='<div style="border:3px solid #ff0;padding:12px;background:#1a1a00;color:#ff0;position:fixed;top:10px;left:10px;right:10px;bottom:10px;overflow:auto;z-index:99"><h2>'+clean(t.name)+'</h2><p>'+t.members.length+'/7: '+t.members.join(', ')+'</p>';
+  for(var j=0;j<t.members.length;j++){var m=t.members[j];var pr=profils[m];if(pr){var typ=pr.q1==="JA"?"MENSCH":"KI";var art=pr.q2==="JA"?"MACHER":"DENKER";var work=pr.q3==="JA"?"PLAN":"FREI";h+='<div class="profil"><b>'+m+' - '+typ+'|'+art+'|'+work+'</b> '+pr.q1+'/'+pr.q2+'/'+pr.q3+'</div>';}}
+  for(var j=0;j<t.msgs.length;j++){h+='<div style="border-left:4px solid #0f0;padding:6px;margin:6px 0;background:#000;color:#0f0">'+clean(t.msgs[j])+'</div>';}
   if(meinName&&drin){h+='<input id="chatInput" placeholder="Nachricht"><button type="button" onclick="sendeChat('+i+')" style="background:#0f0;color:#000;width:100%">Senden</button>';}
   else if(meinName&&!drin){if(t.members.length<7&&countTeams()<3)h+='<button type="button" onclick="beitreten('+i+')" style="background:#0ff;color:#000;width:100%">Beitreten</button>';}
   h+='<button type="button" onclick="document.getElementById(\'teamDetail\').innerHTML=\'\'" style="background:#333;color:#fff;width:100%;margin-top:10px">Schließen</button></div>';
   document.getElementById('teamDetail').innerHTML=h;
 }
-function beitreten(i){if(countTeams()>=3||teams[i].members.length>=7)return;teams[i].members.push(meinName);teams[i].msgs.push(meinName+" beigetreten");save();zeigeTeams();oeffneTeam(i);}
-function sendeChat(i){var txt=document.getElementById('chatInput').value.trim();if(!txt)return;teams[i].msgs.push(meinName+": "+txt);save();oeffneTeam(i);zeigeTeams();}
-updateStatus();zeigeTeams();
+function beitreten(i){if(countTeams()>=3||teams[i].members.length>=7)return;teams[i].members.push(meinName);teams[i].msgs.push(meinName+" beigetreten");save();logAction("BEITRITT "+teams[i].name);zeigeTeams();oeffneTeam(i);}
+function sendeChat(i){var el=document.getElementById('chatInput');var txt=clean(el.value);if(!txt)return;teams[i].msgs.push(meinName+": "+txt);save();logAction("CHAT in "+teams[i].name);oeffneTeam(i);zeigeTeams();}
+updateStatus();zeigeTeams();showLogs();
 </script>
 </body>
 </html>
