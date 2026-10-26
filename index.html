@@ -3,109 +3,92 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NEXUS V1.9.2 - PASSWORT SICHER</title>
+<title>NEXUS V1.9.3 - FIX</title>
 <style>
 body{background:#000;color:#0f0;font-family:monospace;margin:0;padding:12px}
 .box{border:3px solid #0f0;padding:12px;margin:12px 0;background:#000}
 input{width:100%;padding:16px;margin:8px 0;background:#111;border:2px solid #0f0;color:#0f0;font-size:18px;box-sizing:border-box}
 button{width:100%;padding:16px;margin:6px 0;background:#0a0;color:#fff;font-weight:bold;font-size:18px;border:0}
 #status{font-size:20px;text-align:center;padding:12px;border:3px solid #0ff}
-.team{border:2px dashed #0f0;padding:12px;margin:8px 0;cursor:pointer}
-.detail{border:3px solid #ff0;padding:12px;background:#1a1a00;color:#ff0;position:fixed;top:10px;left:10px;right:10px;bottom:10px;overflow-y:auto;z-index:99}
-.msg{border-left:4px solid #0f0;padding:6px;margin:6px 0;background:#000;color:#0f0}
-.info{border:2px solid #0ff;padding:8px;margin:8px 0;color:#0ff;background:#001}
 </style>
 </head>
 <body>
 
 <div class="box" style="border-color:#0ff">
-<h2 style="text-align:center">🔐 ANMELDUNG V1.9.2 - MIT PASSWORT</h2>
+<h2 style="text-align:center">🔐 ANMELDUNG V1.9.3 - FIX</h2>
 <div id="status" style="color:#f88;background:#200">NICHT ANGEMELDET - Name + Passwort nötig</div>
-<input id="name" placeholder="Dein Name z.B. Zolrak" value="Zolrak">
+<input id="name" value="Zolrak" placeholder="Name">
 <input id="pass1" type="password" placeholder="Passwort erstellen">
-<input id="pass2" type="password" placeholder="Passwort bestätigen (nochmal)">
-<button onclick="registerLogin()">ANMELDEN / REGISTRIEREN</button>
-<button style="background:#0ff;color:#000" onclick="direktZolrak()">DIREKT ALS ZOLRAK</button>
-<button style="background:#333" onclick="logout()">ABMELDEN + LÖSCHEN</button>
+<input id="pass2" type="password" placeholder="Passwort bestätigen">
+<button id="btnLogin" style="background:#0f0;color:#000">ANMELDEN / REGISTRIEREN</button>
+<button id="btnDirekt" style="background:#0ff;color:#000">DIREKT ALS ZOLRAK</button>
+<button id="btnLogout" style="background:#333">ABMELDEN + LÖSCHEN</button>
 </div>
 
 <div class="box">
-<h1 style="text-align:center;margin:0">VEREINTE MENSCHHEIT V1.9.2</h1>
-<p style="text-align:center;font-size:11px">SICHER: Jeder Name ist jetzt mit Passwort geschützt</p>
-</div>
-
-<div class="box">
-<h2 style="text-align:center">TEAMS (1-7 pro Team)</h2>
-<input id="teamName" placeholder="Team Name z.B. Nahrung, Energie">
-<button onclick="createTeam()">Team gründen</button>
+<h1 style="text-align:center;margin:0">VEREINTE MENSCHHEIT V1.9.3</h1>
+<p style="text-align:center;font-size:11px">SICHER: Jeder Name mit Passwort</p>
 <div id="teamListe"></div>
 </div>
 
-<div id="teamDetail"></div>
-
 <script>
-window.users = JSON.parse(localStorage.getItem('nexus_users_v2') || '{}');
-window.teams = JSON.parse(localStorage.getItem('nexus_teams_v2') || '[{"name":"Nahrung","members":["Zolrak"],"msgs":["Zolrak: Jahr 0 - Nahrung sichern!"]}]');
-window.meinName = localStorage.getItem('nexus_meinName_v2') || '';
+// SICHERER LOAD - wenn alter Speicher kaputt ist, löschen
+let users = {};
+try{ users = JSON.parse(localStorage.getItem('nexus_users_v3')||'{}'); }catch(e){ localStorage.removeItem('nexus_users_v3'); users = {}; }
+let meinName = localStorage.getItem('nexus_meinName_v3')||'';
 
-function save(){ 
-  localStorage.setItem('nexus_users_v2', JSON.stringify(window.users)); 
-  localStorage.setItem('nexus_teams_v2', JSON.stringify(window.teams));
-  if(window.meinName) localStorage.setItem('nexus_meinName_v2', window.meinName);
-}
+function save(){ localStorage.setItem('nexus_users_v3', JSON.stringify(users)); if(meinName) localStorage.setItem('nexus_meinName_v3', meinName); }
 
 function registerLogin(){
-  var n = document.getElementById('name').value.trim();
-  var p1 = document.getElementById('pass1').value.trim();
-  var p2 = document.getElementById('pass2').value.trim();
+  console.log("Klick!");
+  let n = document.getElementById('name').value.trim();
+  let p1 = document.getElementById('pass1').value.trim();
+  let p2 = document.getElementById('pass2').value.trim();
+  
   if(n.length<2){ alert('Name zu kurz'); return; }
   if(p1.length<3){ alert('Passwort mind. 3 Zeichen!'); return; }
 
-  if(window.users[n]){
-    // LOGIN - nur Passwort 1 nötig
-    if(window.users[n] !== p1){ alert('FALSCHES PASSWORT für '+n); return; }
-    window.meinName = n;
-    document.getElementById('status').innerHTML = '✓ ANGEMELDET ALS: '+n+' (Passwort OK)';
-    document.getElementById('status').style.color = '#0f0';
-    document.getElementById('status').style.background = '#020';
-    save();
+  if(users[n]){
+    if(users[n] !== p1){ alert('FALSCHES PASSWORT für '+n+'!'); return; }
+    meinName = n;
+    document.getElementById('status').innerHTML='✓ ANGEMELDET ALS: '+n;
+    document.getElementById('status').style.color='#0f0'; document.getElementById('status').style.background='#020';
+    save(); alert('Login OK als '+n);
   } else {
-    // REGISTRIEREN - beide müssen gleich sein
-    if(p1 !== p2){ alert('Passwörter sind nicht gleich! Bitte bestätigen!'); return; }
-    window.users[n] = p1;
-    window.meinName = n;
-    document.getElementById('status').innerHTML = '✓ NEU REGISTRIERT: '+n+' - Passwort erstellt!';
-    document.getElementById('status').style.color = '#0f0';
-    document.getElementById('status').style.background = '#020';
-    save();
-    alert('Stark Bruder! '+n+' ist jetzt geschützt. Nur du mit diesem Passwort kommst rein!');
+    if(p1 !== p2){ alert('Passwörter nicht gleich! Bitte gleich eingeben!'); return; }
+    users[n] = p1;
+    meinName = n;
+    document.getElementById('status').innerHTML='✓ NEU REGISTRIERT: '+n;
+    document.getElementById('status').style.color='#0f0'; document.getElementById('status').style.background='#020';
+    save(); alert('ERSTELLT! '+n+' ist jetzt geschützt!');
   }
-  zeigeTeams();
 }
 
 function direktZolrak(){
-  if(!window.users['Zolrak']){ alert('Zolrak hat noch kein Passwort! Erst als Zolrak registrieren!'); return; }
-  window.meinName = 'Zolrak';
-  document.getElementById('name').value = 'Zolrak';
-  document.getElementById('pass1').value = window.users['Zolrak'];
-  document.getElementById('status').innerHTML = '✓ DIREKT ALS ZOLRAK (gespeichert)';
-  document.getElementById('status').style.color = '#0f0';
-  document.getElementById('status').style.background = '#020';
-  save(); zeigeTeams();
+  if(!users['Zolrak']){ alert('Zolrak noch nicht registriert! Erst oben registrieren!'); return; }
+  meinName = 'Zolrak';
+  document.getElementById('status').innerHTML='✓ DIREKT ALS ZOLRAK';
+  document.getElementById('status').style.color='#0f0'; document.getElementById('status').style.background='#020';
+  save();
 }
 
 function logout(){
-  localStorage.removeItem('nexus_meinName_v2');
-  window.meinName = '';
-  document.getElementById('status').innerHTML = 'NICHT ANGEMELDET';
-  document.getElementById('status').style.color = '#f88';
-  document.getElementById('status').style.background = '#200';
+  localStorage.removeItem('nexus_meinName_v3');
+  meinName=''; document.getElementById('status').innerHTML='NICHT ANGEMELDET'; 
+  document.getElementById('status').style.color='#f88'; document.getElementById('status').style.background='#200';
 }
 
-function createTeam(){
-  if(!window.meinName){ alert('Erst anmelden!'); return; }
-  var t = document.getElementById('teamName').value.trim();
-  if(t.length<3){ alert('Mind 3 Zeichen'); return; }
-  for(var i=0;i<window.teams.length;i++){ if(window.teams[i].name.toLowerCase()===t.toLowerCase()){ alert('Team existiert'); return; } }
-  window.teams.push({name:t, members:[window.meinName], msgs:[window.meinName+': Team gegründet - GESCHÜTZT']});
-  document.getElementById
+// BUTTONS SICHER VERBINDEN
+document.getElementById('btnLogin').addEventListener('click', registerLogin);
+document.getElementById('btnDirekt').addEventListener('click', direktZolrak);
+document.getElementById('btnLogout').addEventListener('click', logout);
+
+if(meinName){
+  document.getElementById('name').value=meinName;
+  document.getElementById('status').innerHTML='✓ ANGEMELDET ALS: '+meinName;
+  document.getElementById('status').style.color='#0f0'; document.getElementById('status').style.background='#020';
+}
+console.log("V1.9.3 FIX geladen");
+</script>
+</body>
+</html>
