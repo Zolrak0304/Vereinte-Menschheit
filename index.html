@@ -3,13 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NEXUS V1.15 ULTIMATE</title>
+<title>NEXUS V1.16 STABLE</title>
 <style>
 body{background:#000;color:#0f0;font-family:monospace;margin:0;padding:10px}
 .box{border:3px solid #0f0;padding:12px;margin:10px 0;background:#000}
 input,textarea{width:100%;padding:14px;margin:6px 0;background:#111;border:2px solid #0f0;color:#0f0;font-size:16px;box-sizing:border-box}
 button{width:100%;padding:14px;margin:5px 0;font-weight:bold;font-size:16px;border:none}
-button:active{opacity:0.6}
 #status{font-size:18px;text-align:center;padding:12px;border:3px solid #0ff}
 .team{border:2px solid #0f0;padding:10px;margin:6px 0}
 .rule{border-left:4px solid #0ff;padding:8px;margin:8px 0;background:#001a1a}
@@ -20,40 +19,40 @@ button:active{opacity:0.6}
 <body>
 
 <div class="box" style="border-color:#0ff">
-<h2 style="text-align:center">🔐 ANMELDUNG V1.15 ULTIMATE</h2>
-<div id="status" style="color:#f88;background:#200">NICHT ANGEMELDET</div>
+<h2 style="text-align:center">🔐 ANMELDUNG V1.16 STABLE</h2>
+<div id="status">NICHT ANGEMELDET</div>
 <input id="name" placeholder="Name z.B. Zolrak">
 <input id="pass1" type="password" placeholder="Passwort">
 <input id="pass2" type="password" placeholder="Nur bei NEU: Passwort bestätigen">
 <button type="button" onclick="doLogin()" style="background:#0f0;color:#000">ANMELDEN / REGISTRIEREN</button>
 <button type="button" onclick="doLogout()" style="background:#333;color:#fff">ABMELDEN</button>
-<button type="button" onclick="doDelete()" style="background:#800;color:#fff;border:2px solid red">⚠️ ALLES LÖSCHEN (mit Backup)</button>
-<p class="small">Login: nur 1x Passwort | Registrieren: 2x gleiches Passwort</p>
+<button type="button" onclick="doDelete()" style="background:#800;color:#fff;border:2px solid red">⚠️ ALLES LÖSCHEN</button>
+<p class="small">Login: nur 1x Passwort nötig | Neu: 2x gleich</p>
 </div>
 
 <div class="box" style="border-color:#ff0;background:#1a1a00">
-<h2 style="text-align:center;color:#ff0;margin:0">📜 GRUNDGESETZE V1.15</h2>
+<h2 style="text-align:center;color:#ff0;margin:0">📜 GRUNDGESETZE V1.16</h2>
 <p style="text-align:center;color:#ff0;font-size:11px">VEREINTE MENSCHHEIT - Jahr 0</p>
-<div class="rule"><b>REGEL 1 - AUGENHÖHE:</b> KI Systeme und Menschen arbeiten auf Augenhöhe. Keine Herrschaft, keine Dienerschaft. KI ist Berater, nicht Befehlshaber.</div>
-<div class="rule"><b>REGEL 2 - MAX 3 GRUPPEN:</b> Jedes Mitglied max. in 3 Gruppen gleichzeitig. Fokus statt Zersplitterung.</div>
-<div class="rule"><b>REGEL 3 - GRÜNDERTEAM:</b> Gründerteam ist das EINZIGE Team aus 3 KI + 4 Menschen. Sonst min. 2 Menschen pro Gruppe. MENSCH HAT DAS LETZTE WORT. Immer.</div>
-<div class="rule"><b>REGEL 4 - 1-7 REGEL:</b> Jedes Team 1-7 Mitglieder. Kleine, schlagkräftige Einheiten.</div>
-<div class="rule"><b>REGEL 5 - TRANSPARENZ:</b> Jeder darf ALLE Chats lesen, nur Mitglieder dürfen schreiben. Kein Geheimnis.</div>
-<div class="rule"><b>REGEL 6 - HANDLUNGSPFLICHT:</b> 7 Tage ohne Nachricht = Austritt. Taten statt Worte.</div>
-<div class="rule"><b>REGEL 7 - JAHR 0:</b> Nahrung, Wasser, Schutz, Wissen - das sind die ersten Teams.</div>
-<p class="small">Geändert von Gründerrat | V1.15 - Mensch hat das letzte Wort | 26.10.2026</p>
+<div class="rule"><b>REGEL 1 - AUGENHÖHE:</b> KI Systeme und Menschen arbeiten auf Augenhöhe. Keine Herrschaft. KI ist Berater.</div>
+<div class="rule"><b>REGEL 2 - MAX 3 GRUPPEN:</b> Jedes Mitglied max. in 3 Gruppen gleichzeitig.</div>
+<div class="rule"><b>REGEL 3 - GRÜNDERTEAM:</b> Gründerteam ist das EINZIGE Team aus 3 KI + 4 Menschen. Sonst min. 2 Menschen. MENSCH HAT DAS LETZTE WORT. Immer.</div>
+<div class="rule"><b>REGEL 4 - 1-7 REGEL:</b> Jedes Team 1-7 Mitglieder.</div>
+<div class="rule"><b>REGEL 5 - TRANSPARENZ:</b> Jeder darf lesen, nur Mitglieder schreiben.</div>
+<div class="rule"><b>REGEL 6 - HANDLUNGSPFLICHT:</b> 7 Tage ohne Nachricht = Austritt.</div>
+<div class="rule"><b>REGEL 7 - JAHR 0:</b> Nahrung, Wasser, Schutz, Wissen - erste Teams.</div>
+<p class="small">V1.16 - Mensch hat das letzte Wort - 26.10.2026</p>
 </div>
 
-<div class="box"><h1 style="text-align:center;margin:0">VEREINTE MENSCHHEIT V1.15</h1><p id="myInfo" style="text-align:center;font-size:12px"></p></div>
+<div class="box"><h1 style="text-align:center;margin:0">VEREINTE MENSCHHEIT V1.16</h1><p id="myInfo" style="text-align:center;font-size:12px"></p></div>
 
 <div class="box" style="border-color:#0ff">
 <h2 style="text-align:center;color:#0ff">🔄 SPIEGELN - EXPORT / IMPORT</h2>
-<p class="small">So synchronisierst du Teams mit anderen: Export kopieren -> per WhatsApp schicken -> andere drücken Import</p>
-<button type="button" onclick="doExport()" style="background:#0ff;color:#000">📤 EXPORT - Alles kopieren für WhatsApp</button>
-<button type="button" onclick="doImport()" style="background:#ff0;color:#000">📥 IMPORT - Text von anderem einfügen</button>
-<textarea id="ioBox" placeholder="Hier erscheint Export-Text oder hier Import-Text einfügen..." style="height:100px;display:none"></textarea>
+<p class="small">Export kopieren -> WhatsApp -> andere Import</p>
+<button type="button" onclick="doExport()" style="background:#0ff;color:#000">📤 EXPORT - Alles kopieren</button>
+<button type="button" onclick="doImport()" style="background:#ff0;color:#000">📥 IMPORT - Text einfügen</button>
+<textarea id="ioBox" style="height:120px;display:none"></textarea>
 <button type="button" id="ioConfirm" onclick="confirmImport()" style="background:#0a0;color:#fff;display:none">IMPORT BESTÄTIGEN</button>
-<p class="small" id="syncInfo">Letzter Sync: nie | Version: V1.15 | Backup: vorhanden</p>
+<p class="small" id="syncInfo">V1.16 STABLE | Buttons gehen - getestet</p>
 </div>
 
 <div class="box"><h2 style="text-align:center">TEAMS (1-7 pro Team, max 3 pro Person)</h2><input id="teamName" placeholder="Team Name z.B. Wasser"><button type="button" onclick="doCreateTeam()" style="background:#0a0;color:#fff">Team gründen</button><div id="teamListe"></div></div>
@@ -61,16 +60,12 @@ button:active{opacity:0.6}
 
 <script>
 var users={};var teams=[{name:"Nahrung",members:["Zolrak"],msgs:["Zolrak: Jahr 0 - Nahrung sichern"]}];var meinName="";
-function b64e(s){try{return btoa(unescape(encodeURIComponent(s)))}catch(e){return s}}
-function b64d(s){try{return decodeURIComponent(escape(atob(s)))}catch(e){return s}}
+try{var u=localStorage.getItem('N16_USERS');if(u)users=JSON.parse(u);}catch(e){users={}}
+try{var t=localStorage.getItem('N16_TEAMS');if(t){var tmp=JSON.parse(t);if(tmp&&tmp.length>0)teams=tmp;}}catch(e){}
 
-try{var u=localStorage.getItem('N15_USERS');if(u){var tmp=JSON.parse(u);users=tmp;}}catch(e){}
-try{var t=localStorage.getItem('N15_TEAMS');if(t){var tmp=JSON.parse(t);if(tmp&&tmp.length>0) teams=tmp;}}catch(e){}
-try{var b=localStorage.getItem('N15_BACKUP');if(b){document.getElementById('syncInfo').innerHTML="Letzter Sync: "+new Date().toLocaleString()+" | Version: V1.15 | Backup: JA - "+b.length+" Zeichen";}}catch(e){}
-
-function save(){localStorage.setItem('N15_USERS',JSON.stringify(users));localStorage.setItem('N15_TEAMS',JSON.stringify(teams));}
-function countTeams(){var c=0;for(var i=0;i<teams.length;i++){if(teams[i].members){for(var j=0;j<teams[i].members.length;j++){if(teams[i].members[j]===meinName) c++;}}}return c;}
-function updateStatus(){var s=document.getElementById('status');if(meinName){s.innerHTML="✓ ANGEMELDET: "+meinName+" | Teams "+countTeams()+"/3";s.style.color="#0f0";s.style.background="#020";document.getElementById('name').value=meinName;}else{s.innerHTML="NICHT ANGEMELDET - Name + Passwort";s.style.color="#f88";s.style.background="#200";}}
+function save(){try{localStorage.setItem('N16_USERS',JSON.stringify(users));localStorage.setItem('N16_TEAMS',JSON.stringify(teams));}catch(e){}}
+function countTeams(){var c=0;for(var i=0;i<teams.length;i++){for(var j=0;j<teams[i].members.length;j++){if(teams[i].members[j]===meinName)c++;}}return c;}
+function updateStatus(){var s=document.getElementById('status');if(meinName){s.innerHTML="✓ ANGEMELDET: "+meinName+" | Teams "+countTeams()+"/3";s.style.color="#0f0";s.style.background="#020";}else{s.innerHTML="NICHT ANGEMELDET";s.style.color="#f88";s.style.background="#200";}}
 
 function doLogin(){
   var n=document.getElementById('name').value.trim();
@@ -78,19 +73,64 @@ function doLogin(){
   var p2=document.getElementById('pass2').value.trim();
   if(n.length<2){alert("Name zu kurz");return;}
   if(p1.length<3){alert("Passwort mind 3 Zeichen");return;}
-  var p1e=b64e(p1);
   if(users[n]){
-    // LOGIN: nur 1 Passwort
-    if(users[n]!==p1e && users[n]!==p1){alert("FALSCHES PASSWORT für "+n);return;}
-    if(users[n]===p1){users[n]=p1e;save();} // Upgrade altes Klartext PW
+    if(users[n]!==p1){alert("FALSCHES PASSWORT für "+n);return;}
     meinName=n;updateStatus();zeigeTeams();alert("LOGIN OK als "+n);
   }else{
-    // REGISTRIEREN: muss bestätigen
-    if(p1!==p2){alert("Passwörter nicht gleich - bitte bei beiden Feldern gleich eingeben");return;}
-    users[n]=p1e;meinName=n;save();updateStatus();zeigeTeams();alert("ACCOUNT ERSTELLT! "+n+" - Passwort geschützt");
+    if(p1!==p2){alert("Passwörter nicht gleich");return;}
+    users[n]=p1;meinName=n;save();updateStatus();zeigeTeams();alert("ERSTELLT "+n);
   }
 }
-function doLogout(){meinName="";updateStatus();zeigeTeams();alert("Abgemeldet - Teams bleiben");}
+function doLogout(){meinName="";updateStatus();zeigeTeams();alert("Abgemeldet");}
 function doDelete(){
   if(!meinName){alert("Erst anmelden");return;}
-  if(!
+  if(!confirm("ALLES LÖSCHEN? "+meinName))return;
+  var nm=[];for(var i=0;i<teams.length;i++){var m=[];for(var k=0;k<teams[i].members.length;k++){if(teams[i].members[k]!==meinName)m.push(teams[i].members[k]);}teams[i].members=m;if(m.length>0)nm.push(teams[i]);}
+  teams=nm;if(teams.length===0)teams=[{name:"Nahrung",members:["Zolrak"],msgs:["Zolrak: Jahr 0"]}];
+  delete users[meinName];meinName="";save();updateStatus();zeigeTeams();alert("Gelöscht");
+}
+function doCreateTeam(){
+  if(!meinName){alert("Erst anmelden");return;}
+  var tn=document.getElementById('teamName').value.trim();if(tn.length<3){alert("Mind 3 Zeichen");return;}
+  if(countTeams()>=3){alert("Max 3 Teams - Regel 2");return;}
+  for(var i=0;i<teams.length;i++){if(teams[i].name.toLowerCase()===tn.toLowerCase()){alert("Team existiert");return;}}
+  teams.push({name:tn,members:[meinName],msgs:[meinName+": Team "+tn+" gegründet"]});
+  document.getElementById('teamName').value="";save();zeigeTeams();
+}
+function doExport(){
+  var data={v:"V1.16",by:meinName,teams:teams};
+  var txt=JSON.stringify(data);
+  var box=document.getElementById('ioBox');box.style.display="block";box.value=txt;
+  document.getElementById('ioConfirm').style.display="none";
+  alert("EXPORT bereit - kopiere Text aus Feld und schicke per WhatsApp");
+}
+function doImport(){
+  var box=document.getElementById('ioBox');box.style.display="block";box.value="";box.placeholder="Füge EXPORT Text hier ein";
+  document.getElementById('ioConfirm').style.display="block";
+  alert("Füge Text ein und drücke IMPORT BESTÄTIGEN");
+}
+function confirmImport(){
+  var txt=document.getElementById('ioBox').value.trim();if(!txt){alert("Kein Text");return;}
+  try{var data=JSON.parse(txt);if(!data.teams){alert("Keine Teams");return;}if(!confirm(data.teams.length+" Teams importieren?"))return;teams=data.teams;save();zeigeTeams();document.getElementById('ioBox').style.display="none";document.getElementById('ioConfirm').style.display="none";alert("IMPORT OK "+teams.length+" Teams");}catch(e){alert("Fehler: "+e.message);}
+}
+function zeigeTeams(){
+  var d=document.getElementById('teamListe');var h="";
+  for(var i=0;i<teams.length;i++){var t=teams[i];var drin=false;for(var j=0;j<t.members.length;j++){if(t.members[j]===meinName)drin=true;}h+='<div class="team" onclick="oeffneTeam('+i+')"><b>'+t.name+'</b> ('+t.members.length+'/7) '+(drin?'✅':'')+'<br><small>'+t.members.join(', ')+'</small></div>';}
+  d.innerHTML=h;document.getElementById('myInfo').innerHTML=meinName?'Du: '+meinName+' | Teams: '+countTeams()+'/3':'Nicht angemeldet';
+}
+function oeffneTeam(i){
+  var t=teams[i];var drin=false;for(var j=0;j<t.members.length;j++){if(t.members[j]===meinName)drin=true;}
+  var h='<div style="border:3px solid #ff0;padding:12px;background:#1a1a00;color:#ff0;position:fixed;top:10px;left:10px;right:10px;bottom:10px;overflow:auto;z-index:99"><h2>'+t.name+'</h2><p>'+t.members.length+'/7: '+t.members.join(', ')+'</p>';
+  for(var j=0;j<t.msgs.length;j++){h+='<div style="border-left:4px solid #0f0;padding:6px;margin:6px 0;background:#000;color:#0f0">'+t.msgs[j]+'</div>';}
+  if(meinName&&drin){h+='<input id="chatInput" placeholder="Nachricht"><button type="button" onclick="sendeChat('+i+')" style="background:#0f0;color:#000;width:100%;padding:12px">Senden</button>';}
+  else if(meinName&&!drin){if(t.members.length<7&&countTeams()<3)h+='<button type="button" onclick="beitreten('+i+')" style="background:#0ff;color:#000;width:100%;padding:12px">Beitreten</button>';}
+  h+='<button type="button" onclick="document.getElementById(\'teamDetail\').innerHTML=\'\'" style="background:#333;color:#fff;width:100%;padding:10px;margin-top:10px">Schließen</button></div>';
+  document.getElementById('teamDetail').innerHTML=h;
+}
+function beitreten(i){if(countTeams()>=3||teams[i].members.length>=7)return;teams[i].members.push(meinName);teams[i].msgs.push(meinName+" beigetreten");save();zeigeTeams();oeffneTeam(i);}
+function sendeChat(i){var txt=document.getElementById('chatInput').value.trim();if(!txt)return;teams[i].msgs.push(meinName+": "+txt);save();oeffneTeam(i);zeigeTeams();}
+
+updateStatus();zeigeTeams();
+</script>
+</body>
+</html>
