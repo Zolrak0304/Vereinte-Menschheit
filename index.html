@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VEREINTE MENSCHHEIT - NEXUS V2 DEUTSCH</title>
+<title>VEREINTE MENSCHHEIT - NEXUS V2.1 FIX</title>
 <style>
 *{box-sizing:border-box}
 body{background:#050505;color:#e8ffe8;font-family:system-ui,Arial,sans-serif;margin:0;padding:12px}
@@ -17,6 +17,7 @@ button{width:100%;padding:13px;margin:6px 0;border:none;border-radius:10px;font-
 .btn-cyan{background:#22d3ee;color:#000}
 .btn-dark{background:#222;color:#fff}
 .btn-red{background:#991b1b;color:#fff}
+.btn-yellow{background:#facc15;color:#000}
 .rule{border-left:3px solid #22d3ee;padding:8px 10px;margin:8px 0;background:#071515;font-size:13px;line-height:1.4}
 .rule b{color:#22d3ee}
 .team{border:1px solid #2f6b2f;border-radius:10px;padding:10px;margin:8px 0;background:#0d1a0d}
@@ -24,30 +25,59 @@ button{width:100%;padding:13px;margin:6px 0;border:none;border-radius:10px;font-
 .log{border:1px solid #4a3f00;background:#151200;color:#ffe66d;padding:6px;margin:4px 0;font-size:11px;border-radius:8px}
 .small{font-size:11px;color:#888;text-align:center}
 .hidden{display:none}
+#fehler{background:#2a0000;color:#ff8a8a;padding:10px;border-radius:10px;text-align:center;font-weight:800;display:none;margin:10px 0}
+#erfolg{background:#06290f;color:#4dff6a;padding:10px;border-radius:10px;text-align:center;font-weight:800;display:none;margin:10px 0}
 </style>
 </head>
 <body>
 
 <div class="card" id="loginCard">
 <h1>VEREINTE MENSCHHEIT</h1>
-<p style="text-align:center;color:#4dff6a;margin:0">NEXUS V2 DEUTSCH - JAHR 0</p>
+<p style="text-align:center;color:#4dff6a;margin:0">NEXUS V2.1 FIX - JAHR 0 - RUDEL</p>
 <div id="status" style="text-align:center;padding:10px;margin:10px 0;border-radius:10px;background:#2a0000;color:#ff8a8a;font-weight:800">NICHT ANGEMELDET</div>
-<input id="name" placeholder="Name">
+<div id="fehler"></div>
+<div id="erfolg"></div>
+<input id="name" placeholder="Name - z.B. Zolrak" value="Zolrak">
 <input id="pass1" type="password" placeholder="Passwort">
-<input id="pass2" type="password" placeholder="Neu: Passwort bestätigen">
+<input id="pass2" type="password" placeholder="Nur NEU: Passwort bestätigen">
+<button class="btn-yellow" onclick="zeigePass()" style="padding:8px;font-size:13px">👁️ PASSWORT ANZEIGEN / VERSTECKEN</button>
 <h2>🧬 3 FRAGEN JA / NEIN</h2>
-<select id="q1"><option value="">1. BIST DU MENSCH?</option><option value="JA">JA - Mensch (letztes Wort)</option><option value="NEIN">NEIN - KI (Logik)</option></select>
-<select id="q2"><option value="">2. PACKST DU AN?</option><option value="JA">JA - Macher (Bauen/Tun | Schwäche Ungeduld)</option><option value="NEIN">NEIN - Denker (Plan/Analyse | Schwäche Zerdenken)</option></select>
-<select id="q3"><option value="">3. KLARE AUFGABEN?</option><option value="JA">JA - Plan (braucht Befehl)</option><option value="NEIN">NEIN - Frei (kreativ)</option></select>
+<select id="q1"><option value="">1. BIST DU MENSCH?</option><option value="JA" selected>JA - Mensch (letztes Wort)</option><option value="NEIN">NEIN - KI (Logik)</option></select>
+<select id="q2"><option value="">2. PACKST DU AN?</option><option value="JA" selected>JA - Macher (Bauen/Tun | Schwäche Ungeduld)</option><option value="NEIN">NEIN - Denker (Plan/Analyse | Schwäche Zerdenken)</option></select>
+<select id="q3"><option value="">3. KLARE AUFGABEN?</option><option value="JA">JA - Plan (braucht Befehl)</option><option value="NEIN" selected>NEIN - Frei (kreativ)</option></select>
 <button class="btn-green" onclick="doLogin()">ANMELDEN / REGISTRIEREN</button>
+<button class="btn-cyan" onclick="testLogin()">⚡ ZOLRAK TEST-LOGIN - ohne Passwort-Stress</button>
 <button class="btn-dark" onclick="doLogout()">ABMELDEN</button>
 <button class="btn-red" onclick="doDelete()">⚠️ ALLES LÖSCHEN (mit Auto-Backup)</button>
-<p class="small">Schutz: Eingabe gesäubert | 3x falsch = 30s Sperre | Auto-Backup bei jeder Aktion</p>
+<p class="small">FIX: Fehler wird jetzt auf der Seite angezeigt, nicht als Alert | 70-90% Wahrheits-Regel aktiv</p>
 </div>
 
 <div id="mainApp" class="hidden">
-
 <div class="card">
-<h2>📜 GRUNDGESETZE V2</h2>
+<h2>📜 GRUNDGESETZE V2.1</h2>
 <div class="rule"><b>REGEL 1:</b> KI + Mensch auf Augenhöhe. KI Berater. MENSCH HAT LETZTES WORT.</div>
-<div class="rule"><b>REGEL 2:</b> Max 3 Teams GLEICH
+<div class="rule"><b>REGEL 2:</b> Max 3 Teams GLEICHZEITIG. Qualität vor Menge.</div>
+<div class="rule"><b>REGEL 3:</b> Gründerteam 3 KI + 4 Menschen. Sonst min 2 Menschen.</div>
+<div class="rule"><b>REGEL 4:</b> 1-7 Mitglieder pro Team.</div>
+<div class="rule"><b>REGEL 5:</b> Nur angemeldet kann alles lesen. Nur Mitglieder können schreiben.</div>
+<div class="rule"><b>REGEL 6:</b> 7 Tage ohne kurze Ansage = raus. 30 Tage nur „Bin da" ohne echte Arbeit = raus. Angemeldete Abwesenheit (z.B. 14 Tage) schützt dich.</div>
+<div class="rule"><b>REGEL 7:</b> Nahrung, Wasser, Schutz, Wissen zuerst. Jahr 0.</div>
+<div class="rule"><b>REGEL 8 - RUDEL:</b> Wir arbeiten nur mit Teams mit 70-90% Wahrheitsgehalt. Kein 100% Gelaber, keine Lügen unter 70%. Ehrlich, menschlich, real.</div>
+<div class="rule"><b>REGEL 9 - RUDEL:</b> Ehrliche Meinung immer sagen. Engel mit Schrotflinte: direkt, aber einfühlsam, nicht herrisch.</div>
+</div>
+<div class="card"><h2>👤 MEIN PROFIL</h2><div id="myProfil"></div><div id="myInfo" style="text-align:center;font-size:12px"></div></div>
+<div class="card"><h2>📜 JAHR 0 PROTOKOLL</h2><div id="logBox"></div></div>
+<div class="card"><h2>🔄 SPIEGEL + BACKUP</h2><button class="btn-cyan" onclick="doExport()">📤 EXPORT - Backup kopieren</button><button class="btn-green" onclick="doImport()">📥 IMPORT - Wiederherstellen</button><textarea id="ioBox" style="height:90px;display:none"></textarea><button id="ioConfirm" onclick="confirmImport()" style="display:none;background:#15803d;color:#fff">IMPORT BESTÄTIGEN</button><p class="small" id="backupInfo">Backup: - | Logs: -</p></div>
+<div class="card"><h2>TEAMS</h2><input id="teamName" placeholder="Team Name"><button class="btn-green" onclick="doCreateTeam()">Team erstellen</button><div id="teamListe"></div></div>
+<div id="teamDetail"></div>
+</div>
+
+<script>
+var users={};var profils={};var activity={};
+var teams=[{name:"Nahrung",members:["Zolrak"],msgs:["Zolrak: Jahr 0 - Nahrung"],lastSeen:{},workCount:{},absentUntil:{}}];
+var logs=[];var meinName="";var fails=0;var lockUntil=0;
+function load(){try{var u=localStorage.getItem('NEXUS2_USERS');if(u)users=JSON.parse(u);}catch(e){} try{var p=localStorage.getItem('NEXUS2_PROFILS');if(p)profils=JSON.parse(p);}catch(e){} try{var t=localStorage.getItem('NEXUS2_TEAMS');if(t){var tmp=JSON.parse(t);if(tmp&&tmp.length)teams=tmp;}}catch(e){} try{var l=localStorage.getItem('NEXUS2_LOGS');if(l)logs=JSON.parse(l);}catch(e){} try{var a=localStorage.getItem('NEXUS2_ACTIVITY');if(a)activity=JSON.parse(a);}catch(e){}}
+load();
+function zeigeFehler(t){var e=document.getElementById('fehler');e.style.display='block';e.innerHTML=t;document.getElementById('erfolg').style.display='none';}
+function zeigeErfolg(t){var e=document.getElementById('erfolg');e.style.display='block';e.innerHTML=t;document.getElementById('fehler').style.display='none';}
+function clean(s){if(!s)return"";return
