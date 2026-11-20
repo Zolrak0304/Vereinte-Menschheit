@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NEXUS V2 FREESTYLE</title>
+<title>VEREINTE MENSCHHEIT - NEXUS V2 DEUTSCH</title>
 <style>
 *{box-sizing:border-box}
 body{background:#050505;color:#e8ffe8;font-family:system-ui,Arial,sans-serif;margin:0;padding:12px}
@@ -24,84 +24,30 @@ button{width:100%;padding:13px;margin:6px 0;border:none;border-radius:10px;font-
 .log{border:1px solid #4a3f00;background:#151200;color:#ffe66d;padding:6px;margin:4px 0;font-size:11px;border-radius:8px}
 .small{font-size:11px;color:#888;text-align:center}
 .hidden{display:none}
-.top{display:flex;justify-content:space-between;align-items:center;font-size:12px}
 </style>
 </head>
 <body>
 
 <div class="card" id="loginCard">
 <h1>VEREINTE MENSCHHEIT</h1>
-<p style="text-align:center;color:#4dff6a;margin:0">NEXUS V2 FREESTYLE - YEAR 0</p>
-<div id="status" style="text-align:center;padding:10px;margin:10px 0;border-radius:10px;background:#2a0000;color:#ff8a8a;font-weight:800">NOT LOGGED IN</div>
+<p style="text-align:center;color:#4dff6a;margin:0">NEXUS V2 DEUTSCH - JAHR 0</p>
+<div id="status" style="text-align:center;padding:10px;margin:10px 0;border-radius:10px;background:#2a0000;color:#ff8a8a;font-weight:800">NICHT ANGEMELDET</div>
 <input id="name" placeholder="Name">
-<input id="pass1" type="password" placeholder="Password">
-<input id="pass2" type="password" placeholder="New: confirm password">
-<h2>🧬 3 QUESTIONS YES / NO</h2>
-<select id="q1"><option value="">1. ARE YOU HUMAN?</option><option value="YES">YES - Human (last word)</option><option value="NO">NO - AI (logic)</option></select>
-<select id="q2"><option value="">2. DO YOU TAKE ACTION?</option><option value="YES">YES - Maker (build/do | weakness impatience)</option><option value="NO">NO - Thinker (plan/analyse | weakness overthinking)</option></select>
-<select id="q3"><option value="">3. CLEAR TASKS?</option><option value="YES">YES - Plan (needs order)</option><option value="NO">NO - Free (creative)</option></select>
-<button class="btn-green" onclick="doLogin()">LOGIN / REGISTER</button>
-<button class="btn-dark" onclick="doLogout()">LOGOUT</button>
-<button class="btn-red" onclick="doDelete()">⚠️ DELETE ALL (with auto-backup)</button>
-<p class="small">Protection: input cleaned | 3x wrong = 30s lock | auto-backup on every action</p>
+<input id="pass1" type="password" placeholder="Passwort">
+<input id="pass2" type="password" placeholder="Neu: Passwort bestätigen">
+<h2>🧬 3 FRAGEN JA / NEIN</h2>
+<select id="q1"><option value="">1. BIST DU MENSCH?</option><option value="JA">JA - Mensch (letztes Wort)</option><option value="NEIN">NEIN - KI (Logik)</option></select>
+<select id="q2"><option value="">2. PACKST DU AN?</option><option value="JA">JA - Macher (Bauen/Tun | Schwäche Ungeduld)</option><option value="NEIN">NEIN - Denker (Plan/Analyse | Schwäche Zerdenken)</option></select>
+<select id="q3"><option value="">3. KLARE AUFGABEN?</option><option value="JA">JA - Plan (braucht Befehl)</option><option value="NEIN">NEIN - Frei (kreativ)</option></select>
+<button class="btn-green" onclick="doLogin()">ANMELDEN / REGISTRIEREN</button>
+<button class="btn-dark" onclick="doLogout()">ABMELDEN</button>
+<button class="btn-red" onclick="doDelete()">⚠️ ALLES LÖSCHEN (mit Auto-Backup)</button>
+<p class="small">Schutz: Eingabe gesäubert | 3x falsch = 30s Sperre | Auto-Backup bei jeder Aktion</p>
 </div>
 
 <div id="mainApp" class="hidden">
 
 <div class="card">
-<h2>📜 BASIC LAWS V2</h2>
-<div class="rule"><b>RULE 1:</b> AI + Human eye to eye. AI advisor. HUMAN HAS LAST WORD.</div>
-<div class="rule"><b>RULE 2:</b> Max 3 teams AT THE SAME TIME. Quality over quantity.</div>
-<div class="rule"><b>RULE 3:</b> Founder team 3 AI + 4 Humans. Otherwise min 2 Humans.</div>
-<div class="rule"><b>RULE 4:</b> 1-7 members per team.</div>
-<div class="rule"><b>RULE 5:</b> Only logged in can read everything. Only members can write.</div>
-<div class="rule"><b>RULE 6:</b> 7 days without a short notice = out. 30 days only "I'm here" without real work = out. Announced absence (e.g. 14 days) protects you.</div>
-<div class="rule"><b>RULE 7:</b> Food, Water, Shelter, Knowledge first. Year 0.</div>
-</div>
-
-<div class="card">
-<h2>👤 MY PROFILE</h2>
-<div id="myProfil"></div>
-<div id="myInfo" style="text-align:center;font-size:12px"></div>
-</div>
-
-<div class="card">
-<h2>📜 YEAR 0 PROTOCOL</h2>
-<div id="logBox"></div>
-</div>
-
-<div class="card">
-<h2>🔄 MIRROR + BACKUP</h2>
-<button class="btn-cyan" onclick="doExport()">📤 EXPORT - Copy backup</button>
-<button class="btn-green" onclick="doImport()">📥 IMPORT - Restore</button>
-<textarea id="ioBox" style="height:90px;display:none"></textarea>
-<button id="ioConfirm" onclick="confirmImport()" style="display:none;background:#15803d;color:#fff">CONFIRM IMPORT</button>
-<p class="small" id="backupInfo">Backup: - | Logs: -</p>
-</div>
-
-<div class="card">
-<h2>TEAMS</h2>
-<input id="teamName" placeholder="Team Name">
-<button class="btn-green" onclick="doCreateTeam()">Create Team</button>
-<div id="teamListe"></div>
-</div>
-<div id="teamDetail"></div>
-
-</div>
-
-<script>
-// ENGLISH CODE - DATA
-var users={};var profils={};var activity={};
-var teams=[{name:"Food",members:["Zolrak"],msgs:["Zolrak: Year 0 - Food"],lastSeen:{},workCount:{}}];
-var logs=[];var meinName="";var fails=0;var lockUntil=0;
-try{var u=localStorage.getItem('NEXUS2_USERS');if(u)users=JSON.parse(u);}catch(e){}
-try{var p=localStorage.getItem('NEXUS2_PROFILS');if(p)profils=JSON.parse(p);}catch(e){}
-try{var t=localStorage.getItem('NEXUS2_TEAMS');if(t){var tmp=JSON.parse(t);if(tmp&&tmp.length)teams=tmp;}}catch(e){}
-try{var l=localStorage.getItem('NEXUS2_LOGS');if(l)logs=JSON.parse(l);}catch(e){}
-try{var a=localStorage.getItem('NEXUS2_ACTIVITY');if(a)activity=JSON.parse(a);}catch(e){}
-
-function clean(s){if(!s)return"";return s.replace(/</g,"").replace(/>/g,"").replace(/script/gi,"").trim().substring(0,80);}
-function now(){return Date.now();}
-function save(){try{localStorage.setItem('NEXUS2_USERS',JSON.stringify(users));localStorage.setItem('NEXUS2_PROFILS',JSON.stringify(profils));localStorage.setItem('NEXUS2_TEAMS',JSON.stringify(teams));localStorage.setItem('NEXUS2_ACTIVITY',JSON.stringify(activity));localStorage.setItem('NEXUS2_BACKUP',JSON.stringify({users:users,profils:profils,teams:teams,logs:logs,activity:activity,time:new Date().toISOString()}));}catch(e){}}
-function logAction(act){var e=new Date().toLocaleString()+" - "+(meinName||"Guest")+" - "+act;logs.push(e);if(logs.length>100)logs.shift();try{localStorage.setItem('NEXUS2_LOGS',JSON.stringify(logs));}catch(e){}save();showLogs();}
-function showLogs(){var b=document.getElementById('logBox');if(!b)return;var h="";for(var i=logs.length-1;i>=0&&i>logs.length-6;i--){h+='<div class="log">'+logs[i]+'</div>';}b.innerHTML=h||
+<h2>📜 GRUNDGESETZE V2</h2>
+<div class="rule"><b>REGEL 1:</b> KI + Mensch auf Augenhöhe. KI Berater. MENSCH HAT LETZTES WORT.</div>
+<div class="rule"><b>REGEL 2:</b> Max 3 Teams GLEICH
